@@ -2,7 +2,7 @@ node_modules
 /.cache
 /build
 /dist
-/public/build
+# /public/build
 /.mf
 .env
 .shopify
