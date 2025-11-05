@@ -9,49 +9,108 @@
   max-width: 20%;
   border-right: 1px solid #ddd;
   padding-right: 1.5rem;
+  height: calc(100vh - 4rem);
+  overflow-y: auto;
+  position: sticky;
+  top: 2rem;
 }
 
-.filters h3 {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+.filters h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #1f2937;
 }
 
-.filter-option {
-  margin-bottom: 1rem;
+.filter-section {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 1rem;
+}
+
+.filter-header {
+  transition: background-color 0.2s ease;
+  border-radius: 0.375rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.filter-header:hover {
+  background-color: #f9fafb;
+}
+
+.filter-options {
+  padding-left: 0.5rem;
+}
+
+.filter-options label {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.filter-options label:hover {
+  color: #4b5563;
+}
+
+.filter-options input[type='checkbox'] {
+  cursor: pointer;
 }
 
 .products {
   flex: 4;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4rem;
 }
 
 .product-card {
-  border: 1px solid #e2e2e2;
-  border-radius: 8px;
   padding: 1rem;
   text-align: center;
   background-color: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
 
 .product-card img {
   width: 100%;
   aspect-ratio: 2 / 3;
   object-fit: cover;
-  border-radius: 6px;
   margin-bottom: 0.75rem;
+  border-radius: 0 !important;
+  border: none !important;
 }
 
 .product-card h4 {
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.25rem;
+  color: #1f2937;
 }
 
 .product-card p {
   font-size: 0.9rem;
-  color: #666;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.product-card .out-of-stock {
+  color: #ef4444;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .rugs-section {
+    flex-direction: column;
+  }
+
+  .filters {
+    max-width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+    padding-right: 0;
+    padding-bottom: 1.5rem;
+    height: auto;
+    position: static;
+  }
 }
