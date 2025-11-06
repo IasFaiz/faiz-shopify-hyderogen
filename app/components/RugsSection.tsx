@@ -22,7 +22,7 @@ interface SelectedFilters {
 
 const RugsSection = () => {
   // State for filters enabled/disabled
-  const [filtersEnabled, setFiltersEnabled] = useState<boolean>(true);
+  const [filtersEnabled, setFiltersEnabled] = useState<boolean>(false);
 
   // State for filter sections open/close
   const [openFilters, setOpenFilters] = useState<FilterState>({
@@ -314,73 +314,82 @@ const RugsSection = () => {
   );
 
   return (
-    <div className="rugs-section">
-      {/* Left Filter Section */}
-      <div className="filters">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-gray-800">Filters</h2>
-          <div className="filter-toggle">
-            <label className="switch" aria-label="Toggle filters">
-              <input
-                type="checkbox"
-                checked={filtersEnabled}
-                onChange={toggleFiltersEnabled}
-              />
-              <span className="slider round"></span>
-            </label>
-          </div>
+    <div className="rugs-section-container">
+      {/* Filter Toggle Button - always visible at the top */}
+      <div className="filter-toggle-container">
+        <h2 className="filter-toggle-label">Filters</h2>
+        <div className="filter-toggle">
+          <label className="switch" aria-label="Toggle filters">
+            <input
+              type="checkbox"
+              checked={filtersEnabled}
+              onChange={toggleFiltersEnabled}
+            />
+            <span className="slider round"></span>
+          </label>
         </div>
-
-        {renderFilterSection('Availability', 'availability', ['In Stock'])}
-        {renderFilterSection('Color', 'color', filterOptions.colors)}
-        {renderFilterSection('Size', 'size', filterOptions.sizes)}
-        {renderFilterSection('Material', 'material', filterOptions.materials)}
-        {renderFilterSection('Price', 'price', filterOptions.prices)}
-        {renderFilterSection('Style', 'style', filterOptions.styles)}
-        {renderFilterSection(
-          'Pile Height',
-          'pileHeight',
-          filterOptions.pileHeights,
-        )}
-        {renderFilterSection(
-          'Collection',
-          'collection',
-          filterOptions.collections,
-        )}
-        {renderFilterSection(
-          'Characteristics',
-          'characteristics',
-          filterOptions.characteristics,
-        )}
       </div>
 
-      {/* Right Product Section */}
-      <div className="products-container">
-        {filteredRugs.length === 0 ? (
-          <div className="no-products">
-            <p className="text-gray-500">
-              No rugs match your selected filters.
-            </p>
+      <div className={`rugs-section ${filtersEnabled ? '' : 'filters-hidden'}`}>
+        {/* Left Filter Section - only visible when filters are enabled */}
+        {filtersEnabled && (
+          <div className="filters">
+            {renderFilterSection('Availability', 'availability', ['In Stock'])}
+            {renderFilterSection('Color', 'color', filterOptions.colors)}
+            {renderFilterSection('Size', 'size', filterOptions.sizes)}
+            {renderFilterSection(
+              'Material',
+              'material',
+              filterOptions.materials,
+            )}
+            {renderFilterSection('Price', 'price', filterOptions.prices)}
+            {renderFilterSection('Style', 'style', filterOptions.styles)}
+            {renderFilterSection(
+              'Pile Height',
+              'pileHeight',
+              filterOptions.pileHeights,
+            )}
+            {renderFilterSection(
+              'Collection',
+              'collection',
+              filterOptions.collections,
+            )}
+            {renderFilterSection(
+              'Characteristics',
+              'characteristics',
+              filterOptions.characteristics,
+            )}
           </div>
-        ) : (
-          filteredRugs.map((rug) => (
-            <Link
-              key={rug.id}
-              to={`/products/${rug.id}`}
-              className="product-card-link"
-            >
-              <div className="product-card">
-                <div className="product-image-container">
-                  <img src={rug.image} alt={rug.name} />
-                  {rug.customisable && (
-                    <div className="customisable-badge">Customisable</div>
-                  )}
-                </div>
-                <div className="product-name">{rug.collection}</div>
-              </div>
-            </Link>
-          ))
         )}
+
+        {/* Right Product Section */}
+        <div className="products-container">
+          {filteredRugs.length === 0 ? (
+            <div className="no-products">
+              <p className="text-gray-500">
+                No rugs match your selected filters.
+              </p>
+            </div>
+          ) : (
+            filteredRugs.map((rug) => (
+              <Link
+                key={rug.id}
+                to={`/products/${rug.id}`}
+                className="product-card-link"
+              >
+                <div className="product-card">
+                  <div className="product-image-container">
+                    <img src={rug.image} alt={rug.name} />
+                    {rug.customisable && (
+                      <div className="customisable-badge">Customisable</div>
+                    )}
+                  </div>
+                  <div className="product-name">{rug.collection}</div>
+                </div>
+              </Link>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

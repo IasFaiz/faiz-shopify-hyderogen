@@ -1,7 +1,8 @@
-import {Link} from 'react-router';
+import {Link, useNavigate} from 'react-router';
 import {useCart} from '~/lib/cart-context';
 
 export default function CartPage() {
+  const navigate = useNavigate();
   const {cart, getCartTotal, updateQuantity, removeFromCart, clearCart} =
     useCart();
 
@@ -22,7 +23,18 @@ export default function CartPage() {
 
   return (
     <div className="cart-page-container">
-      <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
+      <div className="cart-header-with-back">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            void navigate(-1);
+          }}
+          className="cart-back-button"
+        >
+          ← Back
+        </button>
+        <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
+      </div>
 
       {/* Cart Items */}
       <div className="mb-8">

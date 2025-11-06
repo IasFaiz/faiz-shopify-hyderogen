@@ -64,7 +64,9 @@ export default function ProductDetails() {
       return false;
     }
     return (
-      selectedSize || (isCustomSize && customSize.width && customSize.length)
+      (selectedSize ||
+        (isCustomSize && customSize.width && customSize.length)) &&
+      selectedShape
     );
   };
 
@@ -163,11 +165,7 @@ export default function ProductDetails() {
             <h2 className="text-lg font-semibold mb-2">Characteristics</h2>
             <div className="product-details-characteristics">
               {product.characteristics.map((char, index) => (
-                <span
-                  key={index}
-                >
-                  {char}
-                </span>
+                <span key={index}>{char}</span>
               ))}
             </div>
           </div>
@@ -242,9 +240,7 @@ export default function ProductDetails() {
                   key={index}
                   onClick={() => setSelectedColor(color)}
                   className={`product-details-color-option ${
-                    selectedColor === color
-                      ? 'selected'
-                      : ''
+                    selectedColor === color ? 'selected' : ''
                   }`}
                 >
                   {color}
@@ -283,12 +279,8 @@ export default function ProductDetails() {
               >
                 -
               </button>
-              <span>
-                {quantity}
-              </span>
-              <button
-                onClick={() => handleQuantityChange('increase')}
-              >
+              <span>{quantity}</span>
+              <button onClick={() => handleQuantityChange('increase')}>
                 +
               </button>
             </div>
@@ -299,9 +291,7 @@ export default function ProductDetails() {
             onClick={handleAddToCart}
             disabled={!isAddToCartEnabled()}
             className={`product-details-add-to-cart ${
-              isAddToCartEnabled()
-                ? ''
-                : ''
+              isAddToCartEnabled() ? '' : ''
             }`}
           >
             {product.customisable ? 'Get Quote' : 'Add to Cart'}

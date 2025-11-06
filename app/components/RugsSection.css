@@ -1,26 +1,50 @@
-.rugs-section {
+.rugs-section-container {
   display: flex;
-  gap: 2rem;
+  flex-direction: column;
+  width: 100%;
   padding: 2rem;
 }
 
+.rugs-section {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  position: relative;
+}
+
+.rugs-section.filters-hidden {
+  flex-direction: column;
+}
+
 .filters {
-  flex: 0 0 auto;
-  width: 20%;
+  flex: 0 0 25%;
+  width: 25%;
+  max-width: 25%;
   border-right: 1px solid #ddd;
   padding-right: 1.5rem;
-  height: calc(100vh - 4rem);
+  height: calc(100vh - 6rem);
   overflow-y: auto;
   position: sticky;
-  top: 2rem;
+  top: 4rem;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    margin 0.3s ease;
+}
+
+.rugs-section.filters-hidden .filters {
+  display: none;
 }
 
 .filters h2 {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.125rem;
+  font-weight: 500;
   margin-bottom: 1.5rem;
   color: #1f2937;
-  color: #1f2937;
+}
+
+.filter-section h3 {
+  font-weight: 500;
 }
 
 .filter-section {
@@ -46,12 +70,40 @@
 }
 
 .products-container {
-  flex: 1 1 auto;
+  flex: 1 1 75%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
   justify-content: center;
   min-width: 0;
+  transition: all 0.3s ease;
+}
+
+.rugs-section.filters-hidden .products-container {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  max-width: 100%;
+  width: 100%;
+  flex: 1 1 100%;
+}
+
+/* Filter toggle button positioning */
+.filter-toggle-container {
+  position: sticky;
+  top: 2rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  background: transparent;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-toggle-label {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #1f2937;
 }
 
 .product-card {
@@ -125,18 +177,27 @@
   }
 
   .filters {
+    flex: 0 0 100%;
     width: 100%;
+    max-width: 100%;
     border-right: none;
     border-bottom: 1px solid #ddd;
     padding-right: 0;
     padding-bottom: 1.5rem;
     height: auto;
     position: static;
+    top: auto;
   }
 
   .products-container {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
+  }
+
+  .filter-toggle-container {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    z-index: 20;
   }
 }
 
@@ -146,6 +207,16 @@
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 22px;
   }
+
+  .rugs-section.filters-hidden .products-container {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .filter-toggle-container {
+    padding: 0.5rem;
+  }
 }
 
 /* For large screens 1024px and above */
@@ -153,6 +224,16 @@
   .products-container {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 24px;
+  }
+
+  .rugs-section.filters-hidden .products-container {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .filter-toggle-container {
+    padding: 0.5rem;
   }
 }
 
