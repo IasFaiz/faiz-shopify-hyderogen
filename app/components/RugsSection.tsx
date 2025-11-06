@@ -96,7 +96,6 @@ const RugsSection = () => {
 
   // Toggle filter section
   const toggleFilter = (filterName: string) => {
-    if (!filtersEnabled) return; // Don't allow toggling when filters are disabled
     setOpenFilters((prev) => ({
       ...prev,
       [filterName]: !prev[filterName],
@@ -108,7 +107,10 @@ const RugsSection = () => {
     filterType: keyof SelectedFilters,
     value: string,
   ) => {
-    if (!filtersEnabled) return; // Don't allow filter changes when filters are disabled
+    // If filters are disabled and user is applying a filter, enable filters
+    if (!filtersEnabled) {
+      setFiltersEnabled(true);
+    }
 
     if (filterType === 'availability') {
       setSelectedFilters((prev) => ({
@@ -252,11 +254,9 @@ const RugsSection = () => {
     filterName: string,
     options: string[],
   ) => (
-    <div
-      className={`filter-section mb-4 ${!filtersEnabled ? 'opacity-50' : ''}`}
-    >
+    <div className="filter-section mb-4">
       <div
-        className={`filter-header flex justify-between items-center py-2 ${filtersEnabled ? 'cursor-pointer' : ''}`}
+        className="filter-header flex justify-between items-center py-2 cursor-pointer"
         onClick={() => toggleFilter(filterName)}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -265,7 +265,7 @@ const RugsSection = () => {
           }
         }}
         role="button"
-        tabIndex={filtersEnabled ? 0 : -1}
+        tabIndex={0}
       >
         <h3 className="font-medium text-gray-700">{title}</h3>
         {openFilters[filterName] ? (
@@ -297,12 +297,11 @@ const RugsSection = () => {
                     option,
                   )
                 }
-                disabled={!filtersEnabled}
                 className="mr-2 h-4 w-4 text-blue-600 rounded"
               />
               <label
                 htmlFor={`${filterName}-${option}`}
-                className={`text-sm ${filtersEnabled ? 'text-gray-600 cursor-pointer' : 'text-gray-400'}`}
+                className="text-sm text-gray-600 cursor-pointer"
               >
                 {option}
               </label>
