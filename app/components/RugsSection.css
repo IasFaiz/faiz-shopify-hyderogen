@@ -5,8 +5,8 @@
 }
 
 .filters {
-  flex: 1;
-  max-width: 20%;
+  flex: 0 0 auto;
+  width: 20%;
   border-right: 1px solid #ddd;
   padding-right: 1.5rem;
   height: calc(100vh - 4rem);
@@ -54,29 +54,56 @@
   cursor: pointer;
 }
 
-.products {
-  flex: 4;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 4rem;
+.products-container {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5rem;
+  min-width: 0;
 }
 
 .product-card {
+  width: 260px;
+  height: 320px;
+  box-sizing: border-box;
   padding: 1rem;
   text-align: center;
   background-color: #fff;
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  min-width: 260px;
+  max-width: 260px;
+  overflow: hidden;
+}
+
+.product-image-container {
+  width: 100%;
+  height: 40%;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+  flex: 0 0 auto;
 }
 
 .product-card img {
   width: 100%;
-  aspect-ratio: 2 / 3;
+  height: 100%;
   object-fit: cover;
-  margin-bottom: 0.75rem;
   border-radius: 0 !important;
   border: none !important;
+}
+
+.product-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
 }
 
 .product-card h4 {
@@ -90,27 +117,43 @@
   font-size: 0.9rem;
   color: #6b7280;
   margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .product-card .out-of-stock {
   color: #ef4444;
   font-weight: 500;
   font-size: 0.875rem;
+  margin-top: auto;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
+.no-products {
+  width: 100%;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* For screens narrower than 768px */
+@media (max-width: 767px) {
   .rugs-section {
     flex-direction: column;
   }
 
   .filters {
-    max-width: 100%;
+    width: 100%;
     border-right: none;
     border-bottom: 1px solid #ddd;
     padding-right: 0;
     padding-bottom: 1.5rem;
     height: auto;
     position: static;
+  }
+
+  .products-container {
+    gap: 3rem;
   }
 }

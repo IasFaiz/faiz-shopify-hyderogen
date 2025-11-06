@@ -273,7 +273,7 @@ const RugsSection = () => {
   return (
     <div className="rugs-section">
       {/* Left Filter Section */}
-      <div className="filters overflow-y-auto max-h-screen">
+      <div className="filters">
         <h2 className="text-xl font-bold mb-4 text-gray-800">Filters</h2>
 
         {renderFilterSection('Availability', 'availability', ['In Stock'])}
@@ -300,9 +300,9 @@ const RugsSection = () => {
       </div>
 
       {/* Right Product Section */}
-      <div className="products">
+      <div className="products-container">
         {filteredRugs.length === 0 ? (
-          <div className="col-span-full text-center py-10">
+          <div className="no-products">
             <p className="text-gray-500">
               No rugs match your selected filters.
             </p>
@@ -310,12 +310,16 @@ const RugsSection = () => {
         ) : (
           filteredRugs.map((rug) => (
             <div key={rug.id} className="product-card">
-              <img src={rug.image} alt={rug.name} />
-              <h4>{rug.name}</h4>
-              <p>{rug.description}</p>
-              {!rug.availability && (
-                <span className="text-red-500 text-sm">Out of Stock</span>
-              )}
+              <div className="product-image-container">
+                <img src={rug.image} alt={rug.name} />
+              </div>
+              <div className="product-content">
+                <h4>{rug.name}</h4>
+                <p>{rug.description}</p>
+                {!rug.availability && (
+                  <span className="text-red-500 text-sm">Out of Stock</span>
+                )}
+              </div>
             </div>
           ))
         )}
