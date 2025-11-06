@@ -20,6 +20,9 @@ interface SelectedFilters {
 }
 
 const RugsSection = () => {
+  // State for filters enabled/disabled
+  const [filtersEnabled, setFiltersEnabled] = useState<boolean>(true);
+
   // State for filter sections open/close
   const [openFilters, setOpenFilters] = useState<FilterState>({
     availability: true,
@@ -93,6 +96,7 @@ const RugsSection = () => {
 
   // Toggle filter section
   const toggleFilter = (filterName: string) => {
+    if (!filtersEnabled) return; // Don't allow toggling when filters are disabled
     setOpenFilters((prev) => ({
       ...prev,
       [filterName]: !prev[filterName],
@@ -104,6 +108,8 @@ const RugsSection = () => {
     filterType: keyof SelectedFilters,
     value: string,
   ) => {
+    if (!filtersEnabled) return; // Don't allow filter changes when filters are disabled
+
     if (filterType === 'availability') {
       setSelectedFilters((prev) => ({
         ...prev,
@@ -206,15 +212,51 @@ const RugsSection = () => {
     return true;
   });
 
+  // Toggle filters on/off
+  const toggleFiltersEnabled = () => {
+    const newState = !filtersEnabled;
+    setFiltersEnabled(newState);
+
+    if (!newState) {
+      // If turning off filters, reset all filters and close accordions
+      setSelectedFilters({
+        availability: false,
+        color: [],
+        size: [],
+        material: [],
+        price: [],
+        style: [],
+        pileHeight: [],
+        collection: [],
+        characteristics: [],
+      });
+
+      // Close all filter accordions
+      setOpenFilters({
+        availability: false,
+        color: false,
+        size: false,
+        material: false,
+        price: false,
+        style: false,
+        pileHeight: false,
+        collection: false,
+        characteristics: false,
+      });
+    }
+  };
+
   // Render filter section
   const renderFilterSection = (
     title: string,
     filterName: string,
     options: string[],
   ) => (
-    <div className="filter-section mb-4">
+    <div
+      className={`filter-section mb-4 ${!filtersEnabled ? 'opacity-50' : ''}`}
+    >
       <div
-        className="filter-header flex justify-between items-center py-2 cursor-pointer"
+        className={`filter-header flex justify-between items-center py-2 ${filtersEnabled ? 'cursor-pointer' : ''}`}
         onClick={() => toggleFilter(filterName)}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -223,7 +265,7 @@ const RugsSection = () => {
           }
         }}
         role="button"
-        tabIndex={0}
+        tabIndex={filtersEnabled ? 0 : -1}
       >
         <h3 className="font-medium text-gray-700">{title}</h3>
         {openFilters[filterName] ? (
@@ -255,11 +297,12 @@ const RugsSection = () => {
                     option,
                   )
                 }
+                disabled={!filtersEnabled}
                 className="mr-2 h-4 w-4 text-blue-600 rounded"
               />
               <label
                 htmlFor={`${filterName}-${option}`}
-                className="text-sm text-gray-600 cursor-pointer"
+                className={`text-sm ${filtersEnabled ? 'text-gray-600 cursor-pointer' : 'text-gray-400'}`}
               >
                 {option}
               </label>
@@ -274,7 +317,19 @@ const RugsSection = () => {
     <div className="rugs-section">
       {/* Left Filter Section */}
       <div className="filters">
-        <h2 className="text-xl font-bold mb-4 text-gray-800">Filters</h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold text-gray-800">Filters</h2>
+          <div className="filter-toggle">
+            <label className="switch" aria-label="Toggle filters">
+              <input
+                type="checkbox"
+                checked={filtersEnabled}
+                onChange={toggleFiltersEnabled}
+              />
+              <span className="slider round"></span>
+            </label>
+          </div>
+        </div>
 
         {renderFilterSection('Availability', 'availability', ['In Stock'])}
         {renderFilterSection('Color', 'color', filterOptions.colors)}
