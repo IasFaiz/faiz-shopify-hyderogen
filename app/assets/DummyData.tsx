@@ -20,7 +20,7 @@ const dummyData = [
     id: 2,
     name: 'Aakar Cotton Rug 2x3',
     image:
-      'https://images.unsplash.com/photo-1616628188462-3d8c1adcc3f7?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 875,
     availability: true,
     size: '2x3',
@@ -37,7 +37,7 @@ const dummyData = [
     id: 3,
     name: 'Adair Polyester Rug 5x8',
     image:
-      'https://images.unsplash.com/photo-1605745341112-1e8e8a9b3d12?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 2599,
     availability: false,
     size: '5x8',
