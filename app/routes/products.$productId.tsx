@@ -106,8 +106,14 @@ export default function ProductDetails() {
           </li>
           <li className="text-gray-500">/</li>
           <li>
-            <Link to="/rugs" className="text-blue-600 hover:underline">
+            <Link to="/" className="text-blue-600 hover:underline">
               Rugs
+            </Link>
+          </li>
+          <li className="text-gray-500">/</li>
+          <li>
+            <Link to="/" className="text-blue-600 hover:underline">
+              {product.collection}
             </Link>
           </li>
           <li className="text-gray-500">/</li>
