@@ -54,7 +54,7 @@ const dummyData = [
     id: 4,
     name: 'Aibel Wool Rug 6x9',
     image:
-      'https://images.unsplash.com/photo-1622202229685-b9a9890f3a71?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 3299,
     availability: true,
     size: '6x9',
@@ -71,7 +71,7 @@ const dummyData = [
     id: 5,
     name: 'Aion Linen Rug 4x6',
     image:
-      'https://images.unsplash.com/photo-1624561186167-8a69e4dc91a8?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1150,
     availability: true,
     size: '4x6',
@@ -88,7 +88,7 @@ const dummyData = [
     id: 6,
     name: 'Acadia Rayon Rug 8x10',
     image:
-      'https://images.unsplash.com/photo-1602524812126-901b2d5d8e74?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 3480,
     availability: true,
     size: '8x10',
@@ -105,7 +105,7 @@ const dummyData = [
     id: 7,
     name: 'Adair Polyester Rug Square',
     image:
-      'https://images.unsplash.com/photo-1622202229652-31c40124d15f?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1950,
     availability: false,
     size: 'Square',
@@ -122,7 +122,7 @@ const dummyData = [
     id: 8,
     name: 'Aakar Cotton Rug Oval',
     image:
-      'https://images.unsplash.com/photo-1602524812440-91b2d5d8e743?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 699,
     availability: true,
     size: 'Oval',
@@ -139,7 +139,7 @@ const dummyData = [
     id: 9,
     name: 'Aibel Wool Rug 2x3',
     image:
-      'https://images.unsplash.com/photo-1632202229685-b9a9890f3a73?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 425,
     availability: false,
     size: '2x3',
@@ -156,7 +156,7 @@ const dummyData = [
     id: 10,
     name: 'Aion Polyester Rug 5x8',
     image:
-      'https://images.unsplash.com/photo-1624561186267-8a69e4dc91a9?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 2150,
     availability: true,
     size: '5x8',
@@ -173,7 +173,7 @@ const dummyData = [
     id: 11,
     name: 'Acadia Wool Rug 4x6',
     image:
-      'https://images.unsplash.com/photo-1616627525126-3d8c1adcc3f8?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1490,
     availability: true,
     size: '4x6',
@@ -190,7 +190,7 @@ const dummyData = [
     id: 12,
     name: 'Aakar Cotton Rug 3x5',
     image:
-      'https://images.unsplash.com/photo-1618220179428-22790b461013?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 999,
     availability: true,
     size: '3x5',
@@ -207,7 +207,7 @@ const dummyData = [
     id: 13,
     name: 'Adair Rayon Rug 6x9',
     image:
-      'https://images.unsplash.com/photo-1622202229601-b9a9890f3a72?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 2699,
     availability: false,
     size: '6x9',
@@ -224,7 +224,7 @@ const dummyData = [
     id: 14,
     name: 'Aibel Wool Rug 8x10',
     image:
-      'https://images.unsplash.com/photo-1616628188452-3d8c1adcc3f9?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 3250,
     availability: true,
     size: '8x10',
@@ -241,7 +241,7 @@ const dummyData = [
     id: 15,
     name: 'Aion Linen Rug 5x8',
     image:
-      'https://images.unsplash.com/photo-1624561186165-8a69e4dc91a8?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1350,
     availability: true,
     size: '5x8',
@@ -258,7 +258,7 @@ const dummyData = [
     id: 16,
     name: 'Acadia Polyester Rug 3x5',
     image:
-      'https://images.unsplash.com/photo-1622202229618-b9a9890f3a75?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1750,
     availability: false,
     size: '3x5',
@@ -275,7 +275,7 @@ const dummyData = [
     id: 17,
     name: 'Aakar Cotton Rug 2x3',
     image:
-      'https://images.unsplash.com/photo-1616627525326-3d8c1adcc3f3?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 599,
     availability: true,
     size: '2x3',
@@ -292,7 +292,7 @@ const dummyData = [
     id: 18,
     name: 'Adair Wool Rug 5x8',
     image:
-      'https://images.unsplash.com/photo-1616627525658-3d8c1adcc3fa?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 2099,
     availability: true,
     size: '5x8',
@@ -309,7 +309,7 @@ const dummyData = [
     id: 19,
     name: 'Aibel Wool Rug Oval',
     image:
-      'https://images.unsplash.com/photo-1624561186299-8a69e4dc91a7?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 2899,
     availability: true,
     size: 'Oval',
@@ -326,7 +326,7 @@ const dummyData = [
     id: 20,
     name: 'Aion Polyester Rug 6x9',
     image:
-      'https://images.unsplash.com/photo-1602524812127-901b2d5d8e76?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 2650,
     availability: false,
     size: '6x9',
@@ -343,7 +343,7 @@ const dummyData = [
     id: 21,
     name: 'Acadia Wool Rug 5x8',
     image:
-      'https://images.unsplash.com/photo-1622202229644-b9a9890f3a70?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1899,
     availability: true,
     size: '5x8',
@@ -360,7 +360,7 @@ const dummyData = [
     id: 22,
     name: 'Aakar Cotton Rug 4x6',
     image:
-      'https://images.unsplash.com/photo-1616627525988-3d8c1adcc3f1?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1199,
     availability: true,
     size: '4x6',
@@ -377,7 +377,7 @@ const dummyData = [
     id: 23,
     name: 'Adair Polyester Rug 8x10',
     image:
-      'https://images.unsplash.com/photo-1622202229695-b9a9890f3a73?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 3100,
     availability: false,
     size: '8x10',
@@ -394,7 +394,7 @@ const dummyData = [
     id: 24,
     name: 'Aibel Rayon Rug 3x5',
     image:
-      'https://images.unsplash.com/photo-1616627525999-3d8c1adcc3fb?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 850,
     availability: true,
     size: '3x5',
@@ -411,7 +411,7 @@ const dummyData = [
     id: 25,
     name: 'Aion Linen Rug 6x9',
     image:
-      'https://images.unsplash.com/photo-1624561186182-8a69e4dc91a6?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1850,
     availability: true,
     size: '6x9',
@@ -428,7 +428,7 @@ const dummyData = [
     id: 26,
     name: 'Acadia Polyester Rug Oval',
     image:
-      'https://images.unsplash.com/photo-1622202229620-b9a9890f3a79?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 2050,
     availability: true,
     size: 'Oval',
@@ -445,7 +445,7 @@ const dummyData = [
     id: 27,
     name: 'Aakar Cotton Rug Square',
     image:
-      'https://images.unsplash.com/photo-1616627525612-3d8c1adcc3f5?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 799,
     availability: false,
     size: 'Square',
@@ -462,7 +462,7 @@ const dummyData = [
     id: 28,
     name: 'Adair Wool Rug 2x3',
     image:
-      'https://images.unsplash.com/photo-1622202229680-b9a9890f3a74?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 499,
     availability: true,
     size: '2x3',
@@ -479,7 +479,7 @@ const dummyData = [
     id: 29,
     name: 'Aibel Wool Rug 4x6',
     image:
-      'https://images.unsplash.com/photo-1616627525400-3d8c1adcc3fc?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1499,
     availability: true,
     size: '4x6',
@@ -496,7 +496,7 @@ const dummyData = [
     id: 30,
     name: 'Aion Polyester Rug 8x10',
     image:
-      'https://images.unsplash.com/photo-1602524812158-901b2d5d8e75?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 2950,
     availability: false,
     size: '8x10',
@@ -513,7 +513,7 @@ const dummyData = [
     id: 31,
     name: 'Acadia Wool Rug 6x9',
     image:
-      'https://images.unsplash.com/photo-1622202229630-b9a9890f3a71?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 2349,
     availability: true,
     size: '6x9',
@@ -530,7 +530,7 @@ const dummyData = [
     id: 32,
     name: 'Aakar Cotton Rug 5x8',
     image:
-      'https://images.unsplash.com/photo-1616627525677-3d8c1adcc3fd?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1299,
     availability: true,
     size: '5x8',
@@ -547,7 +547,7 @@ const dummyData = [
     id: 33,
     name: 'Adair Rayon Rug 4x6',
     image:
-      'https://images.unsplash.com/photo-1622202229625-b9a9890f3a70?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1525,
     availability: false,
     size: '4x6',
@@ -564,7 +564,7 @@ const dummyData = [
     id: 34,
     name: 'Aibel Wool Rug 3x5',
     image:
-      'https://images.unsplash.com/photo-1616627525433-3d8c1adcc3fe?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1025,
     availability: true,
     size: '3x5',
@@ -581,7 +581,7 @@ const dummyData = [
     id: 35,
     name: 'Aion Linen Rug 2x3',
     image:
-      'https://images.unsplash.com/photo-1624561186120-8a69e4dc91a9?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 699,
     availability: true,
     size: '2x3',
@@ -598,7 +598,7 @@ const dummyData = [
     id: 36,
     name: 'Acadia Polyester Rug Square',
     image:
-      'https://images.unsplash.com/photo-1622202229603-b9a9890f3a77?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1150,
     availability: false,
     size: 'Square',
@@ -615,7 +615,7 @@ const dummyData = [
     id: 37,
     name: 'Aakar Cotton Rug 6x9',
     image:
-      'https://images.unsplash.com/photo-1616627525800-3d8c1adcc3f2?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1650,
     availability: true,
     size: '6x9',
@@ -632,7 +632,7 @@ const dummyData = [
     id: 38,
     name: 'Adair Wool Rug Oval',
     image:
-      'https://images.unsplash.com/photo-1622202229627-b9a9890f3a78?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 2450,
     availability: true,
     size: 'Oval',
@@ -649,7 +649,7 @@ const dummyData = [
     id: 39,
     name: 'Aibel Rayon Rug 5x8',
     image:
-      'https://images.unsplash.com/photo-1616627525100-3d8c1adcc3ff?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1875,
     availability: false,
     size: '5x8',
@@ -666,7 +666,7 @@ const dummyData = [
     id: 40,
     name: 'Aion Polyester Rug 4x6',
     image:
-      'https://images.unsplash.com/photo-1602524812158-901b2d5d8e74?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop',
     price: 1399,
     availability: true,
     size: '4x6',
