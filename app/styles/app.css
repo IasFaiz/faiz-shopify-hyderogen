@@ -15,6 +15,7 @@ img {
 /*
 * --------------------------------------------------
 * Non anchor links
+* Non anchor links are any clickable element that is not an <a> tag
 * --------------------------------------------------
 */
 .link:hover {
