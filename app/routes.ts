@@ -26,6 +26,14 @@ export default [
     path: '/contact',
     file: 'routes/contact.tsx',
   },
+  {
+    path: '/cart',
+    file: 'routes/cart.tsx',
+  },
+  {
+    path: '/products/:productId',
+    file: 'routes/products.$productId.tsx',
+  },
   // Manual route definitions can be added to this array, in addition to or instead of using the `flatRoutes` file-based routing convention.
   // See https://reactrouter.com/api/framework-conventions/routes.ts#routests
 ] satisfies RouteConfig;

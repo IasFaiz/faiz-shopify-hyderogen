@@ -1,64 +1,177 @@
-# Implementation Plan
+# Interactive Product Details Flow Implementation Plan
 
-## Task 1: Update all image URLs in DummyData.tsx
+## Overview
 
-### Problem
+This plan outlines the implementation of an interactive product details flow in the Hydrogen storefront, including clickable product cards, a detailed product page, and a cart page.
 
-Only the first image URL is working, and we need to replace all image URLs with the working one from the first object.
+## Current State
 
-### Solution
+- Homepage with product cards exists in `app/components/RugsSection.tsx`
+- Product data is available in `app/assets/DummyData.tsx`
+- Basic routing structure exists in `app/routes.ts`
 
-Replace all image URLs in the dummyData array with:
-`'https://images.unsplash.com/photo-1588421874990-1fe162747f9b?w=800&h=1200&fit=crop'`
+## Implementation Steps
 
-### Implementation Steps
+### 1. Make Existing Product Cards Clickable
 
-1. Open `app/assets/DummyData.tsx`
-2. Replace all image URLs (lines 23, 40, 57, 74, 91, 108, 125, 142, 159, 176, 193, 210, 227, 244, 261, 278, 295, 312, 329, 346, 363, 380, 397, 414, 431, 448, 465, 482, 499, 516, 533, 550, 567, 584, 601, 618, 635, 652, 669) with the working URL from the first object.
+- **File to modify**: `app/components/RugsSection.tsx`
+- **Changes needed**:
+  - Import `Link` from `@shopify/hydrogen`
+  - Wrap the product card in a `Link` component
+  - Set the `to` prop to navigate to `/products/[productId]`
+  - Pass product ID as a parameter in the URL
 
-## Task 2: Fix footer width to occupy most of the available space
+### 2. Create Dynamic Product Details Route
 
-### Problem
+- **File to create**: `app/routes/products.$productId.tsx`
+- **Purpose**: Handle dynamic routing to product details pages
+- **Implementation**:
+  - Use file-based routing convention for dynamic routes
+  - Extract productId from URL params
+  - Fetch product data from dummy data using the productId
+  - Handle case where product is not found
 
-The footer content is shrinking in the center instead of utilizing the available width.
+### 3. Implement Product Details Page
 
-### Solution
+- **File to implement**: `app/routes/products.$productId.tsx`
+- **Components needed**:
+  - **Image Gallery**:
+    - Main product image display
+    - Five sub-images below (repeat single image if only one exists)
+    - Click functionality to update main image when sub-image is clicked
+  - **Product Information**:
+    - Breadcrumb navigation (Home / Rugs / {Product Name})
+    - Product name, collection, characteristics (as tags/list)
+  - **Customization Options**:
+    - Size selection (pre-defined sizes + custom size option)
+    - Custom size inputs (width + length) with validation
+    - Color options (repeat same image if needed)
+    - Shape options (radio buttons: "Square or Rectangle", "Circle or Oval")
+    - Quantity controls (increment/decrement)
+  - **Action Button**:
+    - "Add to Cart" or "Get Quote" button
+    - Disable until required selections are made
+    - Navigate to cart page on click
 
-Adjust the footer styling to make it occupy most of the width with appropriate margins.
+### 4. Create Cart Context
 
-### Implementation Steps
+- **File to create**: `app/lib/cart-context.tsx`
+- **Purpose**: Manage cart state across the application
+- **Implementation**:
+  - Create React context for cart state
+  - Implement context provider with cart state and actions
+  - Add functions to add items to cart, update quantity, remove items
+  - Add context to the app root
 
-1. Open `app/styles/jaipur-style.css`
-2. Modify the `.footer-content` class to:
-   - Increase the max-width to a larger value (e.g., 95% or 100%)
-   - Adjust padding to ensure proper margins on the sides
-3. Alternatively, modify the `.footer-links` grid to better utilize the available space.
+### 5. Implement Cart Page
 
-### Current Footer Classes to Modify
+- **File to create**: `app/routes/cart.tsx`
+- **Components needed**:
+  - Cart items display with:
+    - Small product image
+    - Product name
+    - Selected options (color, size, shape)
+    - Quantity
+    - Price
+  - Cart summary (subtotal, etc.)
+  - Dummy "Checkout" button (no real API integration)
 
-- `.footer-content` - Controls the overall width and padding of the footer content
-- `.footer-links` - Controls the grid layout for footer columns
-- `.footer-column` - Controls individual column styling
+### 6. Update Routing Configuration
 
-### Proposed Changes
+- **File to modify**: `app/routes.ts`
+- **Changes needed**:
+  - Add route for product details page
+  - Add route for cart page
 
-```css
-.footer-content {
-  max-width: 100%; /* Change from 1580px to 100% */
-  margin: 0 auto;
-  padding: 0 3rem; /* Increase side padding for better margins */
-}
+### 7. Add Navigation Components
 
-.footer-links {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 2rem;
-  margin-bottom: 3rem;
-  width: 100%; /* Ensure full width usage */
-}
+- **Implementation**:
+  - Breadcrumb navigation for product details page
+  - Back to products link
+  - Continue shopping link on cart page
+
+### 8. Implement Form Validation
+
+- **Implementation**:
+  - Validate custom size inputs (ensure width and length are provided)
+  - Validate that all required options are selected before enabling "Add to Cart"
+  - Show appropriate error messages
+
+### 9. Style the Pages
+
+- **Files to modify/create**:
+  - Update existing styles as needed
+  - Create new styles for product details and cart pages if needed
+- **Implementation**:
+  - Ensure consistent styling with existing design
+  - Make pages responsive
+  - Add hover states and transitions for better UX
+
+### 10. Test the Complete Flow
+
+- **Testing scenarios**:
+  - Click product card on homepage
+  - Navigate to product details page
+  - Select various options
+  - Add product to cart
+  - Navigate to cart page
+  - Verify all information is displayed correctly
+
+## Technical Considerations
+
+### Data Flow
+
+1. Homepage displays product cards from `DummyData.tsx`
+2. Clicking a card navigates to `/products/[productId]`
+3. Product details page fetches product data using the productId
+4. User selects options and adds to cart
+5. Cart context stores the cart state
+6. Cart page displays items from cart context
+
+### State Management
+
+- Use React context for cart state
+- Use local state for product selections on the details page
+- Use URL params for product identification
+
+### Routing
+
+- Use Hydrogen's file-based routing
+- Use `Link` components for navigation
+- Implement dynamic routes for product details
+
+### Accessibility
+
+- Add appropriate ARIA labels
+- Ensure keyboard navigation works
+- Add focus styles for interactive elements
+- Use semantic HTML elements
+
+## File Structure
+
+```
+app/
+├── components/
+│   ├── RugsSection.tsx (modify)
+│   └── ... (existing components)
+├── lib/
+│   ├── cart-context.tsx (create)
+│   └── ... (existing lib files)
+├── routes/
+│   ├── products.$productId.tsx (create)
+│   ├── cart.tsx (create)
+│   └── routes.ts (modify)
+└── ... (existing files)
 ```
 
-## Order of Implementation
+## Timeline Estimate
 
-1. First, update all image URLs in DummyData.tsx
-2. Then, fix the footer width styling in jaipur-style.css
+- Making product cards clickable: 1-2 hours
+- Creating product details route: 2-3 hours
+- Implementing product details page: 4-6 hours
+- Creating cart context: 2-3 hours
+- Implementing cart page: 3-4 hours
+- Styling and polish: 3-4 hours
+- Testing and bug fixes: 2-3 hours
+
+**Total estimated time: 17-25 hours**

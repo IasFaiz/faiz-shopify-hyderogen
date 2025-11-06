@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {ChevronDown, ChevronUp} from 'lucide-react';
+import {Link} from 'react-router';
 import dummyData from '../assets/DummyData';
 import './RugsSection.css';
 
@@ -363,15 +364,21 @@ const RugsSection = () => {
           </div>
         ) : (
           filteredRugs.map((rug) => (
-            <div key={rug.id} className="product-card">
-              <div className="product-image-container">
-                <img src={rug.image} alt={rug.name} />
-                {rug.customisable && (
-                  <div className="customisable-badge">Customisable</div>
-                )}
+            <Link
+              key={rug.id}
+              to={`/products/${rug.id}`}
+              className="product-card-link"
+            >
+              <div className="product-card">
+                <div className="product-image-container">
+                  <img src={rug.image} alt={rug.name} />
+                  {rug.customisable && (
+                    <div className="customisable-badge">Customisable</div>
+                  )}
+                </div>
+                <div className="product-name">{rug.collection}</div>
               </div>
-              <div className="product-name">{rug.collection}</div>
-            </div>
+            </Link>
           ))
         )}
       </div>
