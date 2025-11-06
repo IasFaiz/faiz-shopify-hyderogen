@@ -368,12 +368,7 @@ const RugsSection = () => {
                 <img src={rug.image} alt={rug.name} />
                 <div className="customisable-badge">Customisable</div>
               </div>
-              <div className="product-content">
-                <h4>{rug.collection}</h4>
-                {!rug.availability && (
-                  <span className="out-of-stock">Out of Stock</span>
-                )}
-              </div>
+              <div className="product-name">{rug.collection}</div>
             </div>
           ))
         )}
