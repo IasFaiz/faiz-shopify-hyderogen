@@ -14,6 +14,7 @@ const dummyData = [
     collection: 'Acadia',
     characteristics: ['Hand Crafted', 'Indoor', 'Easy Care'],
     description: 'Acadia – Code: ACA-01',
+    customisable: true,
   },
   {
     id: 2,
@@ -30,6 +31,7 @@ const dummyData = [
     collection: 'Aakar',
     characteristics: ['Easy Care', 'Indoor'],
     description: 'Aakar – Code: AAK-02',
+    customisable: false,
   },
   {
     id: 3,
@@ -46,6 +48,7 @@ const dummyData = [
     collection: 'Adair',
     characteristics: ['Pet Friendly', 'Outdoor'],
     description: 'Adair – Code: ADA-03',
+    customisable: true,
   },
   {
     id: 4,
@@ -62,6 +65,7 @@ const dummyData = [
     collection: 'Aibel',
     characteristics: ['Natural Fiber', 'Hand Crafted', 'Indoor'],
     description: 'Aibel – Code: AIB-04',
+    customisable: false,
   },
   {
     id: 5,
@@ -78,6 +82,7 @@ const dummyData = [
     collection: 'Aion',
     characteristics: ['Indoor', 'Easy Care'],
     description: 'Aion – Code: AIO-05',
+    customisable: false,
   },
   {
     id: 6,
@@ -94,6 +99,7 @@ const dummyData = [
     collection: 'Acadia',
     characteristics: ['Pet Friendly', 'Easy Care', 'Indoor'],
     description: 'Acadia – Code: ACA-06',
+    customisable: true,
   },
   {
     id: 7,
@@ -110,6 +116,7 @@ const dummyData = [
     collection: 'Adair',
     characteristics: ['Outdoor', 'Easy Care'],
     description: 'Adair – Code: ADA-07',
+    customisable: false,
   },
   {
     id: 8,
@@ -126,6 +133,7 @@ const dummyData = [
     collection: 'Aakar',
     characteristics: ['Hand Crafted', 'Indoor'],
     description: 'Aakar – Code: AAK-08',
+    customisable: false,
   },
   {
     id: 9,
@@ -142,6 +150,7 @@ const dummyData = [
     collection: 'Aibel',
     characteristics: ['Easy Care', 'Natural Fiber'],
     description: 'Aibel – Code: AIB-09',
+    customisable: false,
   },
   {
     id: 10,
@@ -158,6 +167,7 @@ const dummyData = [
     collection: 'Aion',
     characteristics: ['Indoor', 'Pet Friendly'],
     description: 'Aion – Code: AIO-10',
+    customisable: true,
   },
   {
     id: 11,
@@ -174,6 +184,7 @@ const dummyData = [
     collection: 'Acadia',
     characteristics: ['Indoor', 'Easy Care', 'Hand Crafted'],
     description: 'Acadia – Code: ACA-11',
+    customisable: false,
   },
   {
     id: 12,
@@ -190,6 +201,7 @@ const dummyData = [
     collection: 'Aakar',
     characteristics: ['Easy Care', 'Indoor'],
     description: 'Aakar – Code: AAK-12',
+    customisable: false,
   },
   {
     id: 13,
@@ -206,6 +218,7 @@ const dummyData = [
     collection: 'Adair',
     characteristics: ['Pet Friendly', 'Outdoor'],
     description: 'Adair – Code: ADA-13',
+    customisable: false,
   },
   {
     id: 14,
@@ -222,6 +235,7 @@ const dummyData = [
     collection: 'Aibel',
     characteristics: ['Indoor', 'Hand Crafted', 'Natural Fiber'],
     description: 'Aibel – Code: AIB-14',
+    customisable: false,
   },
   {
     id: 15,
@@ -238,6 +252,7 @@ const dummyData = [
     collection: 'Aion',
     characteristics: ['Easy Care', 'Indoor'],
     description: 'Aion – Code: AIO-15',
+    customisable: false,
   },
   {
     id: 16,
@@ -254,6 +269,7 @@ const dummyData = [
     collection: 'Acadia',
     characteristics: ['Pet Friendly', 'Indoor'],
     description: 'Acadia – Code: ACA-16',
+    customisable: false,
   },
   {
     id: 17,
@@ -270,6 +286,7 @@ const dummyData = [
     collection: 'Aakar',
     characteristics: ['Indoor', 'Hand Crafted'],
     description: 'Aakar – Code: AAK-17',
+    customisable: false,
   },
   {
     id: 18,
@@ -286,6 +303,7 @@ const dummyData = [
     collection: 'Adair',
     characteristics: ['Indoor', 'Natural Fiber'],
     description: 'Adair – Code: ADA-18',
+    customisable: false,
   },
   {
     id: 19,
@@ -302,6 +320,7 @@ const dummyData = [
     collection: 'Aibel',
     characteristics: ['Natural Fiber', 'Hand Crafted'],
     description: 'Aibel – Code: AIB-19',
+    customisable: true,
   },
   {
     id: 20,
@@ -318,6 +337,7 @@ const dummyData = [
     collection: 'Aion',
     characteristics: ['Easy Care', 'Outdoor'],
     description: 'Aion – Code: AIO-20',
+    customisable: false,
   },
   {
     id: 21,
@@ -334,6 +354,7 @@ const dummyData = [
     collection: 'Acadia',
     characteristics: ['Hand Crafted', 'Indoor'],
     description: 'Acadia – Code: ACA-21',
+    customisable: false,
   },
   {
     id: 22,
@@ -350,6 +371,7 @@ const dummyData = [
     collection: 'Aakar',
     characteristics: ['Easy Care', 'Indoor'],
     description: 'Aakar – Code: AAK-22',
+    customisable: false,
   },
   {
     id: 23,
@@ -366,6 +388,7 @@ const dummyData = [
     collection: 'Adair',
     characteristics: ['Pet Friendly', 'Outdoor'],
     description: 'Adair – Code: ADA-23',
+    customisable: false,
   },
   {
     id: 24,
@@ -382,6 +405,7 @@ const dummyData = [
     collection: 'Aibel',
     characteristics: ['Indoor', 'Easy Care'],
     description: 'Aibel – Code: AIB-24',
+    customisable: false,
   },
   {
     id: 25,
@@ -398,6 +422,7 @@ const dummyData = [
     collection: 'Aion',
     characteristics: ['Indoor', 'Hand Crafted'],
     description: 'Aion – Code: AIO-25',
+    customisable: false,
   },
   {
     id: 26,
@@ -414,6 +439,7 @@ const dummyData = [
     collection: 'Acadia',
     characteristics: ['Natural Fiber', 'Indoor', 'Easy Care'],
     description: 'Acadia – Code: ACA-26',
+    customisable: true,
   },
   {
     id: 27,
@@ -430,6 +456,7 @@ const dummyData = [
     collection: 'Aakar',
     characteristics: ['Indoor', 'Hand Crafted'],
     description: 'Aakar – Code: AAK-27',
+    customisable: false,
   },
   {
     id: 28,
@@ -446,6 +473,7 @@ const dummyData = [
     collection: 'Adair',
     characteristics: ['Easy Care', 'Indoor'],
     description: 'Adair – Code: ADA-28',
+    customisable: false,
   },
   {
     id: 29,
@@ -462,12 +490,13 @@ const dummyData = [
     collection: 'Aibel',
     characteristics: ['Indoor', 'Easy Care'],
     description: 'Aibel – Code: AIB-29',
+    customisable: false,
   },
   {
     id: 30,
     name: 'Aion Polyester Rug 8x10',
     image:
-      'https://images.unsplash.com/photo-1602524812140-901b2d5d8e75?w=800&h=1200&fit=crop',
+      'https://images.unsplash.com/photo-1602524812158-901b2d5d8e75?w=800&h=1200&fit=crop',
     price: 2950,
     availability: false,
     size: '8x10',
@@ -478,6 +507,7 @@ const dummyData = [
     collection: 'Aion',
     characteristics: ['Outdoor', 'Pet Friendly'],
     description: 'Aion – Code: AIO-30',
+    customisable: false,
   },
   {
     id: 31,
@@ -494,6 +524,7 @@ const dummyData = [
     collection: 'Acadia',
     characteristics: ['Hand Crafted', 'Indoor', 'Easy Care'],
     description: 'Acadia – Code: ACA-31',
+    customisable: false,
   },
   {
     id: 32,
@@ -510,6 +541,7 @@ const dummyData = [
     collection: 'Aakar',
     characteristics: ['Easy Care', 'Indoor'],
     description: 'Aakar – Code: AAK-32',
+    customisable: false,
   },
   {
     id: 33,
@@ -526,6 +558,7 @@ const dummyData = [
     collection: 'Adair',
     characteristics: ['Outdoor', 'Pet Friendly'],
     description: 'Adair – Code: ADA-33',
+    customisable: false,
   },
   {
     id: 34,
@@ -542,6 +575,7 @@ const dummyData = [
     collection: 'Aibel',
     characteristics: ['Natural Fiber', 'Hand Crafted'],
     description: 'Aibel – Code: AIB-34',
+    customisable: false,
   },
   {
     id: 35,
@@ -558,6 +592,7 @@ const dummyData = [
     collection: 'Aion',
     characteristics: ['Easy Care', 'Indoor'],
     description: 'Aion – Code: AIO-35',
+    customisable: false,
   },
   {
     id: 36,
@@ -574,6 +609,7 @@ const dummyData = [
     collection: 'Acadia',
     characteristics: ['Indoor', 'Easy Care'],
     description: 'Acadia – Code: ACA-36',
+    customisable: false,
   },
   {
     id: 37,
@@ -590,6 +626,7 @@ const dummyData = [
     collection: 'Aakar',
     characteristics: ['Indoor', 'Hand Crafted'],
     description: 'Aakar – Code: AAK-37',
+    customisable: false,
   },
   {
     id: 38,
@@ -606,6 +643,7 @@ const dummyData = [
     collection: 'Adair',
     characteristics: ['Natural Fiber', 'Indoor', 'Easy Care'],
     description: 'Adair – Code: ADA-38',
+    customisable: false,
   },
   {
     id: 39,
@@ -622,6 +660,7 @@ const dummyData = [
     collection: 'Aibel',
     characteristics: ['Indoor', 'Outdoor'],
     description: 'Aibel – Code: AIB-39',
+    customisable: false,
   },
   {
     id: 40,
@@ -638,6 +677,7 @@ const dummyData = [
     collection: 'Aion',
     characteristics: ['Easy Care', 'Pet Friendly'],
     description: 'Aion – Code: AIO-40',
+    customisable: true,
   },
 ];
 export default dummyData;

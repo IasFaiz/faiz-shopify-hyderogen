@@ -366,7 +366,9 @@ const RugsSection = () => {
             <div key={rug.id} className="product-card">
               <div className="product-image-container">
                 <img src={rug.image} alt={rug.name} />
-                <div className="customisable-badge">Customisable</div>
+                {rug.customisable && (
+                  <div className="customisable-badge">Customisable</div>
+                )}
               </div>
               <div className="product-name">{rug.collection}</div>
             </div>

@@ -6,6 +6,24 @@
   --header-height: 64px;
   --color-dark: #000;
   --color-light: #fff;
+  --font-bodoni-moda:
+    'Bodoni Moda', 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+}
+
+/* Global Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-bodoni-moda), serif;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.elegant-text {
+  font-family: var(--font-bodoni-moda), serif;
 }
 
 img {
@@ -217,7 +235,7 @@ button.reset:hover:not(:has(> *)) {
 * --------------------------------------------------
 */
 .footer {
-  background: var(--color-dark);
+  background: #04204f; /* Dark blue background */
   margin-top: auto;
 }
 

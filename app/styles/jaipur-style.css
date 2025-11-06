@@ -410,7 +410,7 @@ a:hover {
 
 /* Footer */
 .footer {
-  background: #001f3f; /* Deep navy blue background */
+  background: #04204f !important; /* Dark blue background */
   padding: 4rem 0 2rem;
   font-family:
     'Inter',
@@ -450,6 +450,8 @@ a:hover {
 }
 
 .footer-heading {
+  font-family:
+    'Bodoni Moda', 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
   font-size: 0.875rem;
   font-weight: 500;
   color: #d4af37; /* Gold/yellow color for headings */
@@ -519,6 +521,8 @@ a:hover {
 }
 
 .footer-logo {
+  font-family:
+    'Bodoni Moda', 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
   color: #ffffff; /* White text color */
   font-size: 1.5rem;
   font-weight: 300;

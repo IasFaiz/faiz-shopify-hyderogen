@@ -7,7 +7,7 @@ export function NewFooter() {
         <div className="footer-links">
           {/* Column 1: CONTACT US */}
           <div className="footer-column">
-            <h3 className="footer-heading">CONTACT US</h3>
+            <h3 className="footer-heading elegant-text">CONTACT US</h3>
             <ul className="footer-contact-list">
               <li className="footer-contact-item">
                 <p>Schedule an appointment</p>
@@ -33,7 +33,7 @@ export function NewFooter() {
 
           {/* Column 2: FOR DESIGNERS */}
           <div className="footer-column">
-            <h3 className="footer-heading">FOR DESIGNERS</h3>
+            <h3 className="footer-heading elegant-text">FOR DESIGNERS</h3>
             <div className="footer-designers-content">
               <p>
                 Interior Designers & Architects can gain exclusive access to our
@@ -44,7 +44,7 @@ export function NewFooter() {
 
           {/* Column 3: LEARN ABOUT RUGS, BLOG, and INSTAGRAM */}
           <div className="footer-column with-divider">
-            <h3 className="footer-heading">LEARN ABOUT RUGS</h3>
+            <h3 className="footer-heading elegant-text">LEARN ABOUT RUGS</h3>
             <ul className="footer-links-list">
               <li>
                 <NavLink to="/rug-size-style-guide" className="footer-link">
@@ -58,7 +58,7 @@ export function NewFooter() {
               </li>
             </ul>
 
-            <h3 className="footer-heading mt-6">BLOG</h3>
+            <h3 className="footer-heading mt-6 elegant-text">BLOG</h3>
             <ul className="footer-links-list">
               <li>
                 <NavLink to="/blog" className="footer-link">
@@ -94,7 +94,7 @@ export function NewFooter() {
           {/* Column 4: Logo and Legal Links */}
           <div className="footer-column">
             <div className="footer-logo-section">
-              <NavLink to="/" className="footer-logo">
+              <NavLink to="/" className="footer-logo elegant-text">
                 STUDIO ABRASH
               </NavLink>
             </div>
