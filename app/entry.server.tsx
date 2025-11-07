@@ -26,6 +26,7 @@ export default async function handleRequest(
       'https://cdn.shopify.com',
       'https://images.unsplash.com', // Add this line
       'https://unsplash.com', // Add this line too
+      'https://drive.google.com', // Add this line too
     ],
   });
 
