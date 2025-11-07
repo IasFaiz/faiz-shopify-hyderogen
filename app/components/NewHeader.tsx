@@ -9,59 +9,48 @@ export function NewHeader() {
     <header className="header">
       <div className="header-content">
         {/* Logo on the left */}
-        <NavLink to="/" className="logo">
-          <img src={logo} alt="logo" className="" />
-        </NavLink>
+        <div className="logo-container">
+          <NavLink to="/" className="logo">
+            <img src={logo} alt="logo" className="logo-img" />
+          </NavLink>
+        </div>
 
-        {/* Navigation links in the center */}
+        {/* Navigation links on the right */}
         <nav className="nav">
           <NavLink
             to="/projects"
-            className={({isActive}) =>
-              `nav-item ${isActive ? 'text-black' : 'text-gray-600 hover:text-black'}`
-            }
+            className={({isActive}) => `nav-item ${isActive ? 'active' : ''}`}
           >
             ABOUT US
           </NavLink>
           <NavLink
             to="/studio"
-            className={({isActive}) =>
-              `nav-item ${isActive ? 'text-black' : 'text-gray-600 hover:text-black'}`
-            }
+            className={({isActive}) => `nav-item ${isActive ? 'active' : ''}`}
           >
             COLLECTIONS
           </NavLink>
           <NavLink
             to="/about"
-            className={({isActive}) =>
-              `nav-item ${isActive ? 'text-black' : 'text-gray-600 hover:text-black'}`
-            }
+            className={({isActive}) => `nav-item ${isActive ? 'active' : ''}`}
           >
             WHY US
           </NavLink>
           <NavLink
             to="/journal"
-            className={({isActive}) =>
-              `nav-item ${isActive ? 'text-black' : 'text-gray-600 hover:text-black'}`
-            }
+            className={({isActive}) => `nav-item ${isActive ? 'active' : ''}`}
           >
             OUR WORK
           </NavLink>
           <NavLink
             to="/contact"
-            className={({isActive}) =>
-              `nav-item ${isActive ? 'text-black' : 'text-gray-600 hover:text-black'}`
-            }
+            className={({isActive}) => `nav-item ${isActive ? 'active' : ''}`}
           >
             CRAFTSMANSHIP
           </NavLink>
         </nav>
 
         {/* Mobile menu button */}
-        <button
-          className="md:hidden text-gray-600"
-          onClick={() => open('mobile')}
-        >
+        <button className="mobile-menu-button" onClick={() => open('mobile')}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -86,51 +75,51 @@ export function MobileHeaderMenu() {
   const {close} = useAside();
 
   return (
-    <nav className="flex flex-col space-y-6 p-4">
+    <nav className="mobile-nav-menu">
       <NavLink
         to="/projects"
         onClick={close}
         className={({isActive}) =>
-          `text-lg font-light tracking-wide ${isActive ? 'text-black' : 'text-gray-600 hover:text-black'}`
+          `mobile-nav-item ${isActive ? 'active' : ''}`
         }
       >
-        PROJECTS
+        ABOUT US
       </NavLink>
       <NavLink
         to="/studio"
         onClick={close}
         className={({isActive}) =>
-          `text-lg font-light tracking-wide ${isActive ? 'text-black' : 'text-gray-600 hover:text-black'}`
+          `mobile-nav-item ${isActive ? 'active' : ''}`
         }
       >
-        STUDIO
+        COLLECTIONS
       </NavLink>
       <NavLink
         to="/about"
         onClick={close}
         className={({isActive}) =>
-          `text-lg font-light tracking-wide ${isActive ? 'text-black' : 'text-gray-600 hover:text-black'}`
+          `mobile-nav-item ${isActive ? 'active' : ''}`
         }
       >
-        ABOUT
+        WHY US
       </NavLink>
       <NavLink
         to="/journal"
         onClick={close}
         className={({isActive}) =>
-          `text-lg font-light tracking-wide ${isActive ? 'text-black' : 'text-gray-600 hover:text-black'}`
+          `mobile-nav-item ${isActive ? 'active' : ''}`
         }
       >
-        JOURNAL
+        OUR WORK
       </NavLink>
       <NavLink
         to="/contact"
         onClick={close}
         className={({isActive}) =>
-          `text-lg font-light tracking-wide ${isActive ? 'text-black' : 'text-gray-600 hover:text-black'}`
+          `mobile-nav-item ${isActive ? 'active' : ''}`
         }
       >
-        CONTACT
+        CRAFTSMANSHIP
       </NavLink>
     </nav>
   );

@@ -17,6 +17,7 @@ import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import jaipurStyles from './styles/jaipur-style.css?url';
+import headerStyles from './styles/header.css?url';
 import {PageLayout} from './components/PageLayout';
 import {CartProvider} from './lib/cart-context';
 
@@ -166,6 +167,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
         <link rel="stylesheet" href={jaipurStyles}></link>
+        <link rel="stylesheet" href={headerStyles}></link>
         <Meta />
         <Links />
       </head>

@@ -14,9 +14,8 @@ import {
   SearchFormPredictive,
 } from '~/components/SearchFormPredictive';
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
-import {NewHeader} from '~/components/NewHeader';
+import {NewHeader, MobileHeaderMenu} from '~/components/NewHeader';
 import {NewFooter} from '~/components/NewFooter';
-import {MobileHeaderMenu} from '~/components/NewHeader';
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
