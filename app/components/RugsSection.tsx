@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {ChevronDown, ChevronUp} from 'lucide-react';
 import {Link} from 'react-router';
-import dummyData from '../assets/DummyData';
+import dummyData2 from '../assets/DummyData';
 import './RugsSection.css';
 
 interface FilterState {
@@ -64,23 +64,23 @@ const RugsSection = () => {
 
   useEffect(() => {
     // Extract unique values
-    const colors = [...new Set(dummyData.map((rug) => rug.color))];
-    const sizes = [...new Set(dummyData.map((rug) => rug.size))];
-    const materials = [...new Set(dummyData.map((rug) => rug.material))];
-    const styles = [...new Set(dummyData.map((rug) => rug.style))];
-    const pileHeights = [...new Set(dummyData.map((rug) => rug.pileHeight))];
-    const collections = [...new Set(dummyData.map((rug) => rug.collection))];
+    const colors = [...new Set(dummyData2.map((rug) => rug.color))];
+    const sizes = [...new Set(dummyData2.map((rug) => rug.size))];
+    const materials = [...new Set(dummyData2.map((rug) => rug.material))];
+    const styles = [...new Set(dummyData2.map((rug) => rug.style))];
+    const pileHeights = [...new Set(dummyData2.map((rug) => rug.pileHeight))];
+    const collections = [...new Set(dummyData2.map((rug) => rug.collection))];
 
     // Extract characteristics
-    const allCharacteristics = dummyData.flatMap((rug) => rug.characteristics);
+    const allCharacteristics = dummyData2.flatMap((rug) => rug.characteristics);
     const characteristics = [...new Set(allCharacteristics)];
 
     // Define price ranges
     const prices = [
-      'Under $1000',
-      '$1000 - $2000',
-      '$2000 - $3000',
-      'Over $3000',
+      'Under 600000',
+      '600000 - 800000',
+      '800000 - 1000000',
+      'Over 1000000',
     ];
 
     setFilterOptions({
@@ -137,7 +137,7 @@ const RugsSection = () => {
   };
 
   // Filter rugs based on selected filters
-  const filteredRugs = dummyData.filter((rug) => {
+  const filteredRugs = dummyData2.filter((rug) => {
     // Availability filter
     if (selectedFilters.availability && !rug.availability) {
       return false;
@@ -171,10 +171,12 @@ const RugsSection = () => {
     if (selectedFilters.price.length > 0) {
       const price = rug.price;
       const priceMatch = selectedFilters.price.some((range) => {
-        if (range === 'Under $1000') return price < 1000;
-        if (range === '$1000 - $2000') return price >= 1000 && price < 2000;
-        if (range === '$2000 - $3000') return price >= 2000 && price < 3000;
-        if (range === 'Over $3000') return price >= 3000;
+        if (range === 'Under 600000') return price < 600000;
+        if (range === '600000 - 800000')
+          return price >= 600000 && price < 800000;
+        if (range === '800000 - 1000000')
+          return price >= 800000 && price < 1000000;
+        if (range === 'Over 1000000') return price >= 1000000;
         return false;
       });
       if (!priceMatch) return false;

@@ -1,6 +1,6 @@
 import {useParams, Link} from 'react-router';
 import {useState} from 'react';
-import dummyData from '../assets/DummyData';
+import dummyData2 from '../assets/DummyData';
 import {useCart} from '~/lib/cart-context';
 
 export default function ProductDetails() {
@@ -15,7 +15,7 @@ export default function ProductDetails() {
   const [isCustomSize, setIsCustomSize] = useState(false);
 
   // Find product by ID
-  const product = dummyData.find((p) => p.id === Number(productId));
+  const product = dummyData2.find((p) => p.id === Number(productId));
 
   if (!product) {
     return (
