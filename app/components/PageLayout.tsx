@@ -14,8 +14,6 @@ import {
   SearchFormPredictive,
 } from '~/components/SearchFormPredictive';
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
-import {NewHeader, MobileHeaderMenu} from '~/components/NewHeader';
-import {NewFooter} from '~/components/NewFooter';
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
@@ -39,9 +37,20 @@ export function PageLayout({
       <CartAside cart={cart} />
       <SearchAside />
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
-      <NewHeader />
+      {header && (
+        <Header
+          header={header}
+          cart={cart}
+          isLoggedIn={isLoggedIn}
+          publicStoreDomain={publicStoreDomain}
+        />
+      )}
       <main>{children}</main>
-      <NewFooter />
+      <Footer
+        footer={footer}
+        header={header}
+        publicStoreDomain={publicStoreDomain}
+      />
     </Aside.Provider>
   );
 }
@@ -150,8 +159,16 @@ function MobileMenuAside({
   publicStoreDomain: PageLayoutProps['publicStoreDomain'];
 }) {
   return (
-    <Aside type="mobile" heading="MENU">
-      <MobileHeaderMenu />
-    </Aside>
+    header.menu &&
+    header.shop.primaryDomain?.url && (
+      <Aside type="mobile" heading="MENU">
+        <HeaderMenu
+          menu={header.menu}
+          viewport="mobile"
+          primaryDomainUrl={header.shop.primaryDomain.url}
+          publicStoreDomain={publicStoreDomain}
+        />
+      </Aside>
+    )
   );
 }

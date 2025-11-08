@@ -1,11 +1,88 @@
-import {useParams, Link} from 'react-router';
+import {useParams, Link, useLoaderData, useNavigate} from 'react-router';
 import {useState} from 'react';
-import dummyData2 from '../assets/DummyData';
-import {useCart} from '~/lib/cart-context';
+import type {Route} from './+types/products.$productId';
+import '~/styles/product-details.css';
+import {
+  getSelectedProductOptions,
+  Analytics,
+  useOptimisticVariant,
+  getProductOptions,
+  getAdjacentAndFirstAvailableVariants,
+  useSelectedOptionInUrlParam,
+} from '@shopify/hydrogen';
+import {ProductPrice} from '~/components/ProductPrice';
+import {ProductImage} from '~/components/ProductImage';
+import {ProductForm} from '~/components/ProductForm';
+import {AddToCartButton} from '~/components/AddToCartButton';
+import {useAside} from '~/components/Aside';
+
+export const meta: Route.MetaFunction = ({data}) => {
+  return [
+    {title: `Hydrogen | ${data?.product.title ?? ''}`},
+    {
+      rel: 'canonical',
+      href: `/products/${data?.product.handle}`,
+    },
+  ];
+};
+
+export async function loader(args: Route.LoaderArgs) {
+  // Start fetching non-critical data without blocking time to first byte
+  const deferredData = loadDeferredData(args);
+
+  // Await the critical data required to render initial state of the page
+  const criticalData = await loadCriticalData(args);
+
+  return {...deferredData, ...criticalData};
+}
+
+/**
+ * Load data necessary for rendering content above the fold. This is the critical data
+ * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
+ */
+async function loadCriticalData({context, params, request}: Route.LoaderArgs) {
+  const {productId} = params;
+  const {storefront} = context;
+
+  if (!productId) {
+    throw new Error('Expected product handle to be defined');
+  }
+
+  // The productId is actually the product handle in Shopify
+  const handle = productId;
+
+  const [{product}] = await Promise.all([
+    storefront.query(PRODUCT_QUERY, {
+      variables: {handle, selectedOptions: getSelectedProductOptions(request)},
+    }),
+    // Add other queries here, so that they are loaded in parallel
+  ]);
+
+  if (!product?.id) {
+    throw new Response(null, {status: 404});
+  }
+
+  return {
+    product,
+  };
+}
+
+/**
+ * Load data for rendering content below the fold. This data is deferred and will be
+ * fetched after the initial page load. If it's unavailable, the page should still 200.
+ * Make sure to not throw any errors here, as it will cause the page to 500.
+ */
+function loadDeferredData({context, params}: Route.LoaderArgs) {
+  // Put any API calls that is not critical to be available on first page render
+  // For example: product reviews, product recommendations, social feeds.
+
+  return {};
+}
 
 export default function ProductDetails() {
-  const {productId} = useParams();
-  const {addToCart} = useCart();
+  const {product} = useLoaderData<typeof loader>();
+  const navigate = useNavigate();
+  const {open} = useAside();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
   const [customSize, setCustomSize] = useState({width: '', length: ''});
@@ -14,23 +91,29 @@ export default function ProductDetails() {
   const [quantity, setQuantity] = useState(1);
   const [isCustomSize, setIsCustomSize] = useState(false);
 
-  // Find product by ID
-  const product = dummyData2.find((p) => p.id === Number(productId));
+  // Optimistically selects a variant with given available variant information
+  const selectedVariant = useOptimisticVariant(
+    product.selectedOrFirstAvailableVariant,
+    getAdjacentAndFirstAvailableVariants(product),
+  );
 
-  if (!product) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
-        <p className="mb-4">The product you are looking for does not exist.</p>
-        <Link to="/" className="text-blue-600 hover:underline">
-          Return to Homepage
-        </Link>
-      </div>
-    );
-  }
+  // Sets the search param to the selected variant without navigation
+  // only when no search params are set in the url
+  useSelectedOptionInUrlParam(selectedVariant.selectedOptions);
+
+  // Get the product options array
+  const productOptions = getProductOptions({
+    ...product,
+    selectedOrFirstAvailableVariant: selectedVariant,
+  });
+
+  const {title, descriptionHtml} = product;
+
+  // Get the featured image
+  const featuredImage = selectedVariant?.image;
 
   // Create an array of images (repeat the same image if only one exists)
-  const images = Array(5).fill(product.image);
+  const images = featuredImage ? Array(5).fill(featuredImage.url) : [];
 
   // Handle size selection
   const handleSizeSelect = (size: string) => {
@@ -72,28 +155,8 @@ export default function ProductDetails() {
 
   // Handle add to cart
   const handleAddToCart = () => {
-    const cartItem = {
-      name: product.name,
-      image: product.image,
-      price: product.price,
-      size: isCustomSize ? 'Custom' : selectedSize,
-      color: selectedColor || product.color,
-      shape: selectedShape,
-      quantity,
-      collection: product.collection,
-      customSize:
-        isCustomSize && customSize.width && customSize.length
-          ? {
-              width: customSize.width,
-              length: customSize.length,
-            }
-          : undefined,
-    };
-
-    addToCart(cartItem);
-
-    // Navigate to cart page
-    window.location.href = '/cart';
+    // Open the cart aside
+    open('cart');
   };
 
   return (
@@ -115,11 +178,11 @@ export default function ProductDetails() {
           <li className="text-gray-500">/</li>
           <li>
             <Link to="/" className="text-blue-600 hover:underline">
-              {product.collection}
+              {'Rugs'}
             </Link>
           </li>
           <li className="text-gray-500">/</li>
-          <li className="text-gray-700">{product.name}</li>
+          <li className="text-gray-700">{title}</li>
         </ol>
       </nav>
 
@@ -128,11 +191,13 @@ export default function ProductDetails() {
         <div>
           {/* Main Image */}
           <div className="mb-4 rounded-lg overflow-hidden product-details-image-gallery">
-            <img
-              src={images[selectedImageIndex]}
-              alt={product.name}
-              className="w-full h-auto object-cover"
-            />
+            {featuredImage && (
+              <img
+                src={images[selectedImageIndex]}
+                alt={title}
+                className="w-full h-auto object-cover"
+              />
+            )}
           </div>
 
           {/* Sub Images */}
@@ -147,7 +212,7 @@ export default function ProductDetails() {
               >
                 <img
                   src={image}
-                  alt={`${product.name} view ${index + 1}`}
+                  alt={`${title} view ${index + 1}`}
                   className="w-full h-auto object-cover"
                 />
               </button>
@@ -157,17 +222,13 @@ export default function ProductDetails() {
 
         {/* Right Section - Product Information */}
         <div>
-          <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-          <p className="text-gray-600 mb-4">Collection: {product.collection}</p>
+          <h1 className="text-3xl font-bold mb-2">{title}</h1>
+          <p className="text-gray-600 mb-4">Collection: Rugs</p>
 
-          {/* Characteristics */}
+          {/* Product Description */}
           <div className="mb-6">
-            <h2 className="text-lg font-semibold mb-2">Characteristics</h2>
-            <div className="product-details-characteristics">
-              {product.characteristics.map((char, index) => (
-                <span key={index}>{char}</span>
-              ))}
-            </div>
+            <h2 className="text-lg font-semibold mb-2">Description</h2>
+            <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
           </div>
 
           {/* Size Selection */}
@@ -235,7 +296,7 @@ export default function ProductDetails() {
           <div className="mb-6">
             <h2 className="text-lg font-semibold mb-2">Color</h2>
             <div className="product-details-color-options">
-              {[product.color].map((color, index) => (
+              {['Default'].map((color, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedColor(color)}
@@ -287,17 +348,121 @@ export default function ProductDetails() {
           </div>
 
           {/* Add to Cart Button */}
-          <button
+          <AddToCartButton
+            disabled={
+              !selectedVariant ||
+              !selectedVariant.availableForSale ||
+              !isAddToCartEnabled()
+            }
             onClick={handleAddToCart}
-            disabled={!isAddToCartEnabled()}
-            className={`product-details-add-to-cart ${
-              isAddToCartEnabled() ? '' : ''
-            }`}
+            lines={
+              selectedVariant
+                ? [
+                    {
+                      merchandiseId: selectedVariant.id,
+                      quantity,
+                      selectedVariant,
+                    },
+                  ]
+                : []
+            }
           >
-            {product.customisable ? 'Get Quote' : 'Add to Cart'}
-          </button>
+            {selectedVariant?.availableForSale ? 'Add to Cart' : 'Sold Out'}
+          </AddToCartButton>
         </div>
       </div>
     </div>
   );
 }
+
+const PRODUCT_VARIANT_FRAGMENT = `#graphql
+  fragment ProductVariant on ProductVariant {
+    availableForSale
+    compareAtPrice {
+      amount
+      currencyCode
+    }
+    id
+    image {
+      __typename
+      id
+      url
+      altText
+      width
+      height
+    }
+    price {
+      amount
+      currencyCode
+    }
+    product {
+      title
+      handle
+    }
+    selectedOptions {
+      name
+      value
+    }
+    sku
+    title
+    unitPrice {
+      amount
+      currencyCode
+    }
+  }
+` as const;
+
+const PRODUCT_FRAGMENT = `#graphql
+  fragment Product on Product {
+    id
+    title
+    vendor
+    handle
+    descriptionHtml
+    description
+    encodedVariantExistence
+    encodedVariantAvailability
+    options {
+      name
+      optionValues {
+        name
+        firstSelectableVariant {
+          ...ProductVariant
+        }
+        swatch {
+          color
+          image {
+            previewImage {
+              url
+            }
+          }
+        }
+      }
+    }
+    selectedOrFirstAvailableVariant(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {
+      ...ProductVariant
+    }
+    adjacentVariants (selectedOptions: $selectedOptions) {
+      ...ProductVariant
+    }
+    seo {
+      description
+      title
+    }
+  }
+  ${PRODUCT_VARIANT_FRAGMENT}
+` as const;
+
+const PRODUCT_QUERY = `#graphql
+  query Product(
+    $country: CountryCode
+    $handle: String!
+    $language: LanguageCode
+    $selectedOptions: [SelectedOptionInput!]!
+  ) @inContext(country: $country, language: $language) {
+    product(handle: $handle) {
+      ...Product
+    }
+  }
+  ${PRODUCT_FRAGMENT}
+` as const;

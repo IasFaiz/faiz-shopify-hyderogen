@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useReducer} from 'react';
+import React, {createContext, useContext, useReducer, useEffect} from 'react';
 import type {ReactNode} from 'react';
 
 // Define cart item type
@@ -73,7 +73,23 @@ interface CartProviderProps {
 
 // Create cart provider
 export const CartProvider: React.FC<CartProviderProps> = ({children}) => {
-  const [cart, dispatch] = useReducer(cartReducer, []);
+  // Initialize cart from localStorage or empty array
+  const getInitialState = (): CartItem[] => {
+    if (typeof window !== 'undefined') {
+      const savedCart = localStorage.getItem('shopify-cart');
+      return savedCart ? (JSON.parse(savedCart) as CartItem[]) : [];
+    }
+    return [];
+  };
+
+  const [cart, dispatch] = useReducer(cartReducer, getInitialState());
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('shopify-cart', JSON.stringify(cart));
+    }
+  }, [cart]);
 
   const addToCart = (item: Omit<CartItem, 'id'>) => {
     dispatch({type: 'ADD_TO_CART', payload: item});

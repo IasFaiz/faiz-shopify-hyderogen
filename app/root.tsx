@@ -15,11 +15,7 @@ import favicon from '~/assets/favicon.svg';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
-import tailwindCss from './styles/tailwind.css?url';
-import jaipurStyles from './styles/jaipur-style.css?url';
-import headerStyles from './styles/header.css?url';
 import {PageLayout} from './components/PageLayout';
-import {CartProvider} from './lib/cart-context';
 
 export type RootLoader = typeof loader;
 
@@ -153,21 +149,8 @@ export function Layout({children}: {children?: React.ReactNode}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin=""
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
-        <link rel="stylesheet" href={tailwindCss}></link>
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
-        <link rel="stylesheet" href={jaipurStyles}></link>
-        <link rel="stylesheet" href={headerStyles}></link>
         <Meta />
         <Links />
       </head>
@@ -193,11 +176,9 @@ export default function App() {
       shop={data.shop}
       consent={data.consent}
     >
-      <CartProvider>
-        <PageLayout {...data}>
-          <Outlet />
-        </PageLayout>
-      </CartProvider>
+      <PageLayout {...data}>
+        <Outlet />
+      </PageLayout>
     </Analytics.Provider>
   );
 }

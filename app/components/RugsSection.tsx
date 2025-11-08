@@ -1,8 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import {ChevronDown, ChevronUp} from 'lucide-react';
 import {Link} from 'react-router';
-import dummyData2 from '../assets/DummyData';
+import {Image} from '@shopify/hydrogen';
+import {useVariantUrl} from '~/lib/variants';
+import type {ProductVariantFragment} from 'storefrontapi.generated';
+import {RUGS_SECTION_PRODUCT_FRAGMENT} from '~/lib/fragments';
 import './RugsSection.css';
+
+// Define a type for our custom product fragment
+type RugsSectionProductFragment = typeof RUGS_SECTION_PRODUCT_FRAGMENT extends (
+  ...args: any[]
+) => infer T
+  ? T
+  : any;
 
 interface FilterState {
   [key: string]: boolean;
@@ -20,7 +30,11 @@ interface SelectedFilters {
   characteristics: string[];
 }
 
-const RugsSection = () => {
+export function RugsSection({
+  products,
+}: {
+  products: RugsSectionProductFragment[];
+}) {
   // State for filters enabled/disabled
   const [filtersEnabled, setFiltersEnabled] = useState<boolean>(false);
 
@@ -50,7 +64,7 @@ const RugsSection = () => {
     characteristics: [],
   });
 
-  // Extract unique values from dummyData
+  // Extract unique values from products
   const [filterOptions, setFilterOptions] = useState({
     colors: [] as string[],
     sizes: [] as string[],
@@ -64,15 +78,40 @@ const RugsSection = () => {
 
   useEffect(() => {
     // Extract unique values
-    const colors = [...new Set(dummyData2.map((rug) => rug.color))];
-    const sizes = [...new Set(dummyData2.map((rug) => rug.size))];
-    const materials = [...new Set(dummyData2.map((rug) => rug.material))];
-    const styles = [...new Set(dummyData2.map((rug) => rug.style))];
-    const pileHeights = [...new Set(dummyData2.map((rug) => rug.pileHeight))];
-    const collections = [...new Set(dummyData2.map((rug) => rug.collection))];
+    const colors = [
+      ...new Set(products.map((product) => product.vendor || 'Unknown')),
+    ];
+    const sizes = [
+      ...new Set(
+        products.map((product) => product.title?.match(/\d+x\d+/)?.[0] || ''),
+      ),
+    ];
+    const materials = [
+      ...new Set(products.map((product) => product.productType || 'Unknown')),
+    ];
+    const styles = [
+      ...new Set(
+        products.map(
+          (product) =>
+            product.tags
+              ?.find((tag: string) => tag.includes('style:'))
+              ?.replace('style:', '') || '',
+        ),
+      ),
+    ];
+    const collections = [
+      ...new Set(
+        products.map(
+          (product) => product.collections?.nodes[0]?.title || 'Unknown',
+        ),
+      ),
+    ];
 
-    // Extract characteristics
-    const allCharacteristics = dummyData2.flatMap((rug) => rug.characteristics);
+    // Extract characteristics from tags
+    const allCharacteristics = products.flatMap(
+      (product) =>
+        product.tags?.filter((tag: string) => !tag.includes('style:')) || [],
+    );
     const characteristics = [...new Set(allCharacteristics)];
 
     // Define price ranges
@@ -89,11 +128,11 @@ const RugsSection = () => {
       materials,
       prices,
       styles,
-      pileHeights,
+      pileHeights: [], // Not available in Shopify product data
       collections,
       characteristics,
     });
-  }, []);
+  }, [products]);
 
   // Toggle filter section
   const toggleFilter = (filterName: string) => {
@@ -136,40 +175,47 @@ const RugsSection = () => {
     }
   };
 
-  // Filter rugs based on selected filters
-  const filteredRugs = dummyData2.filter((rug) => {
-    // Availability filter
-    if (selectedFilters.availability && !rug.availability) {
-      return false;
+  // Filter products based on selected filters
+  const filteredProducts = products.filter((product) => {
+    // Availability filter - check if product has available variants
+    if (selectedFilters.availability) {
+      const hasAvailableVariant = product.variants?.nodes?.some(
+        (variant: ProductVariantFragment) => variant.availableForSale,
+      );
+      if (!hasAvailableVariant) return false;
     }
 
-    // Color filter
+    // Color filter (using vendor as color for now)
     if (
       selectedFilters.color.length > 0 &&
-      !selectedFilters.color.includes(rug.color)
+      product.vendor &&
+      !selectedFilters.color.includes(product.vendor)
     ) {
       return false;
     }
 
-    // Size filter
+    // Size filter (extract from title)
+    const size = product.title?.match(/\d+x\d+/)?.[0] || '';
     if (
       selectedFilters.size.length > 0 &&
-      !selectedFilters.size.includes(rug.size)
+      size &&
+      !selectedFilters.size.includes(size)
     ) {
       return false;
     }
 
-    // Material filter
+    // Material filter (using productType)
     if (
       selectedFilters.material.length > 0 &&
-      !selectedFilters.material.includes(rug.material)
+      product.productType &&
+      !selectedFilters.material.includes(product.productType)
     ) {
       return false;
     }
 
     // Price filter
     if (selectedFilters.price.length > 0) {
-      const price = rug.price;
+      const price = Number(product.priceRange.minVariantPrice.amount);
       const priceMatch = selectedFilters.price.some((range) => {
         if (range === 'Under 600000') return price < 600000;
         if (range === '600000 - 800000')
@@ -182,34 +228,33 @@ const RugsSection = () => {
       if (!priceMatch) return false;
     }
 
-    // Style filter
+    // Style filter (extract from tags)
+    const style =
+      product.tags
+        ?.find((tag: string) => tag.includes('style:'))
+        ?.replace('style:', '') || '';
     if (
       selectedFilters.style.length > 0 &&
-      !selectedFilters.style.includes(rug.style)
-    ) {
-      return false;
-    }
-
-    // Pile Height filter
-    if (
-      selectedFilters.pileHeight.length > 0 &&
-      !selectedFilters.pileHeight.includes(rug.pileHeight)
+      style &&
+      !selectedFilters.style.includes(style)
     ) {
       return false;
     }
 
     // Collection filter
+    const collection = product.collections?.nodes[0]?.title || '';
     if (
       selectedFilters.collection.length > 0 &&
-      !selectedFilters.collection.includes(rug.collection)
+      collection &&
+      !selectedFilters.collection.includes(collection)
     ) {
       return false;
     }
 
-    // Characteristics filter
+    // Characteristics filter (using tags)
     if (selectedFilters.characteristics.length > 0) {
       const hasCharacteristic = selectedFilters.characteristics.some((char) =>
-        rug.characteristics.includes(char),
+        product.tags?.includes(char),
       );
       if (!hasCharacteristic) return false;
     }
@@ -366,35 +411,54 @@ const RugsSection = () => {
 
         {/* Right Product Section */}
         <div className="products-container">
-          {filteredRugs.length === 0 ? (
+          {filteredProducts.length === 0 ? (
             <div className="no-products">
               <p className="text-gray-500">
-                No rugs match your selected filters.
+                No products match your selected filters.
               </p>
             </div>
           ) : (
-            filteredRugs.map((rug) => (
-              <Link
-                key={rug.id}
-                to={`/products/${rug.id}`}
-                className="product-card-link"
-              >
-                <div className="product-card">
-                  <div className="product-image-container">
-                    <img src={rug.image} alt={rug.name} />
-                    {rug.customisable && (
-                      <div className="customisable-badge">Customisable</div>
-                    )}
+            filteredProducts.map((product) => {
+              const image = product.featuredImage;
+
+              return (
+                <Link
+                  key={product.id}
+                  to={`/products/${product.handle}`}
+                  className="product-card-link"
+                  prefetch="intent"
+                >
+                  <div className="product-card">
+                    <div className="product-image-container">
+                      {image && (
+                        <Image
+                          alt={image.altText || product.title}
+                          aspectRatio="1/1"
+                          data={image}
+                          sizes="(min-width: 45em) 400px, 100vw"
+                        />
+                      )}
+                      {product.tags?.includes('customisable') && (
+                        <div className="customisable-badge">Customisable</div>
+                      )}
+                    </div>
+                    <div className="product-name">{product.title}</div>
+                    <div className="product-price">
+                      {new Intl.NumberFormat('en-IN', {
+                        style: 'currency',
+                        currency:
+                          product.priceRange.minVariantPrice.currencyCode,
+                      }).format(
+                        Number(product.priceRange.minVariantPrice.amount),
+                      )}
+                    </div>
                   </div>
-                  <div className="product-name">{rug.collection}</div>
-                </div>
-              </Link>
-            ))
+                </Link>
+              );
+            })
           )}
         </div>
       </div>
     </div>
   );
-};
-
-export default RugsSection;
+}

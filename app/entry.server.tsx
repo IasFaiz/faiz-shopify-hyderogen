@@ -15,19 +15,10 @@ export default async function handleRequest(
   context: HydrogenRouterContextProvider,
 ) {
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
-    // CSP content security policy
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
-    imgSrc: [
-      "'self'",
-      'data:',
-      'https://cdn.shopify.com',
-      'https://images.unsplash.com', // Add this line
-      'https://unsplash.com', // Add this line too
-      'https://drive.google.com', // Add this line too
-    ],
   });
 
   const body = await renderToReadableStream(
