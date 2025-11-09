@@ -7,6 +7,9 @@ import type {
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
+import {HomeBanner} from '~/components/HomeBanner';
+import {RugsSection} from '~/components/RugsSection';
+import {RUGS_SECTION_PRODUCT_FRAGMENT} from '~/lib/fragments';
 
 export const meta: Route.MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -19,7 +22,16 @@ export async function loader(args: Route.LoaderArgs) {
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
-  return {...deferredData, ...criticalData};
+  // Fetch products for RugsSection
+  const rugsSectionProducts = args.context.storefront
+    .query(RUGS_SECTION_PRODUCTS_QUERY)
+    .catch((error: Error) => {
+      // Log query errors, but don't throw them so the page can still render
+      console.error(error);
+      return null;
+    });
+
+  return {...deferredData, ...criticalData, rugsSectionProducts};
 }
 
 /**
@@ -60,8 +72,14 @@ export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
     <div className="home">
-      <FeaturedCollection collection={data.featuredCollection} />
-      <RecommendedProducts products={data.recommendedProducts} />
+      <HomeBanner />
+      <Suspense fallback={<div>Loading products...</div>}>
+        <Await resolve={data.rugsSectionProducts}>
+          {(response) => (
+            <RugsSection products={response?.products?.nodes || []} />
+          )}
+        </Await>
+      </Suspense>
     </div>
   );
 }
@@ -135,6 +153,18 @@ const FEATURED_COLLECTION_QUERY = `#graphql
       }
     }
   }
+` as const;
+
+const RUGS_SECTION_PRODUCTS_QUERY = `#graphql
+  query RugsSectionProducts($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+    products(first: 20) {
+      nodes {
+        ...RugsSectionProduct
+      }
+    }
+  }
+  ${RUGS_SECTION_PRODUCT_FRAGMENT}
 ` as const;
 
 const RECOMMENDED_PRODUCTS_QUERY = `#graphql

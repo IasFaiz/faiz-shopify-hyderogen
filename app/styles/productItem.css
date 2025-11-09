@@ -1,0 +1,33 @@
+/* Product Item Component Styles */
+
+.product-item-component {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease;
+}
+
+.product-item-component:hover {
+  transform: translateY(-5px);
+}
+
+.product-item-component img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.product-item-component h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.product-item-component small {
+  font-size: 0.875rem;
+  color: #666;
+}

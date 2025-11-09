@@ -1,6 +1,7 @@
 import {Suspense} from 'react';
 import {Await, NavLink} from 'react-router';
 import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
+import {NewFooter} from '~/components/NewFooter';
 
 interface FooterProps {
   footer: Promise<FooterQuery | null>;
@@ -17,15 +18,21 @@ export function Footer({
     <Suspense>
       <Await resolve={footerPromise}>
         {(footer) => (
-          <footer className="footer">
-            {footer?.menu && header.shop.primaryDomain?.url && (
-              <FooterMenu
-                menu={footer.menu}
-                primaryDomainUrl={header.shop.primaryDomain.url}
-                publicStoreDomain={publicStoreDomain}
-              />
-            )}
-          </footer>
+          <>
+            {/* Render the custom footer component */}
+            <NewFooter />
+            
+            {/* Keep the original Shopify footer as a fallback or for additional links */}
+            <footer className="footer shopify-footer" style={{display: 'none'}}>
+              {footer?.menu && header.shop.primaryDomain?.url && (
+                <FooterMenu
+                  menu={footer.menu}
+                  primaryDomainUrl={header.shop.primaryDomain.url}
+                  publicStoreDomain={publicStoreDomain}
+                />
+              )}
+            </footer>
+          </>
         )}
       </Await>
     </Suspense>

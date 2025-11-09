@@ -1,0 +1,192 @@
+/* Footer Styles */
+
+/* CSS Variables for Footer */
+:root {
+  --footer-bg-color: #04204f; /* Dark blue background */
+  --footer-text-color: #ffffff; /* White text color */
+  --footer-heading-color: #d4af37; /* Gold/yellow color for headings */
+  --footer-border-color: rgba(
+    255,
+    255,
+    255,
+    0.2
+  ); /* Semi-transparent white for borders */
+  --footer-copyright-color: rgba(
+    255,
+    255,
+    255,
+    0.7
+  ); /* Slightly transparent white text */
+}
+
+/* Footer Container */
+.new-footer {
+  background: var(--footer-bg-color) !important;
+  padding: 4rem 0 2rem;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+}
+
+/* Footer Content Layout */
+.footer-content {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+/* Footer Links Grid */
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+  margin-bottom: 3rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .footer-links {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Footer Columns */
+.footer-column {
+  position: relative;
+}
+
+.footer-column.with-divider {
+  border-right: 1px solid var(--footer-border-color);
+  padding-right: 2rem;
+}
+
+/* Footer Headings */
+.footer-heading {
+  font-family:
+    'Bodoni Moda', 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--footer-heading-color);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Footer Contact List */
+.footer-contact-list {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-contact-item {
+  margin-bottom: 1.25rem;
+  color: var(--footer-text-color);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Footer Designers Content */
+.footer-designers-content {
+  color: var(--footer-text-color);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  max-width: 90%;
+}
+
+/* Footer Links List */
+.footer-links-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.footer-links-list li {
+  margin-bottom: 0.75rem;
+}
+
+/* Footer Links */
+.footer-link {
+  color: var(--footer-text-color);
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.footer-link:hover {
+  opacity: 0.8; /* Subtle hover state */
+}
+
+/* Footer Social */
+.footer-social {
+  margin-top: 1.5rem;
+}
+
+.footer-social-link {
+  color: var(--footer-text-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.footer-social-link:hover {
+  opacity: 0.8; /* Subtle hover state */
+}
+
+/* Footer Logo Section */
+.footer-logo-section {
+  margin-bottom: 2rem;
+}
+
+.footer-logo {
+  font-family:
+    'Bodoni Moda', 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  color: var(--footer-text-color);
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+
+/* Footer Legal Links */
+.footer-legal-links {
+  margin-bottom: 2rem;
+}
+
+/* Footer Copyright */
+.footer-copyright {
+  color: var(--footer-copyright-color);
+  font-size: 0.875rem;
+  margin-top: 2rem;
+}
+
+/* Utility Classes */
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .footer-column.with-divider {
+    border-right: none;
+    padding-right: 0;
+    border-bottom: 1px solid var(--footer-border-color);
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Elegant Text Class */
+.elegant-text {
+  font-family:
+    'Bodoni Moda', 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  letter-spacing: 1px;
+}

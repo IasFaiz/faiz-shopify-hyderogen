@@ -20,14 +20,13 @@ interface FilterState {
 
 interface SelectedFilters {
   availability: boolean;
+  style: string[];
   color: string[];
   size: string[];
   material: string[];
-  price: string[];
-  style: string[];
-  pileHeight: string[];
+  construction: string[];
   collection: string[];
-  characteristics: string[];
+  price: string[];
 }
 
 export function RugsSection({
@@ -41,96 +40,132 @@ export function RugsSection({
   // State for filter sections open/close
   const [openFilters, setOpenFilters] = useState<FilterState>({
     availability: true,
+    style: false,
     color: false,
     size: false,
     material: false,
-    price: false,
-    style: false,
-    pileHeight: false,
+    construction: false,
     collection: false,
-    characteristics: false,
+    price: false,
   });
 
   // State for selected filters
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilters>({
     availability: false,
+    style: [],
     color: [],
     size: [],
     material: [],
-    price: [],
-    style: [],
-    pileHeight: [],
+    construction: [],
     collection: [],
-    characteristics: [],
+    price: [],
   });
 
   // Extract unique values from products
   const [filterOptions, setFilterOptions] = useState({
+    styles: [] as string[],
     colors: [] as string[],
     sizes: [] as string[],
     materials: [] as string[],
-    prices: [] as string[],
-    styles: [] as string[],
-    pileHeights: [] as string[],
+    constructions: [] as string[],
     collections: [] as string[],
-    characteristics: [] as string[],
+    prices: [] as string[],
   });
 
   useEffect(() => {
-    // Extract unique values
-    const colors = [
-      ...new Set(products.map((product) => product.vendor || 'Unknown')),
-    ];
-    const sizes = [
-      ...new Set(
-        products.map((product) => product.title?.match(/\d+x\d+/)?.[0] || ''),
-      ),
-    ];
-    const materials = [
-      ...new Set(products.map((product) => product.productType || 'Unknown')),
-    ];
+    // Extract unique values for each filter category
+
+    // Style filter
     const styles = [
-      ...new Set(
-        products.map(
-          (product) =>
-            product.tags
-              ?.find((tag: string) => tag.includes('style:'))
-              ?.replace('style:', '') || '',
-        ),
-      ),
+      'Contemporary',
+      'Traditional',
+      'Transitional',
+      'Performance',
+      'Outdoor',
     ];
+
+    // Color filter
+    const colors = [
+      'Beige',
+      'Tan / Brown',
+      'Gray',
+      'Ivory / White',
+      'Gold/Yellow',
+      'Teal',
+      'Blue',
+      'Green',
+      'Rust',
+      'Multicolor',
+      'Red',
+      'Pink',
+      'Purple',
+      'Orange',
+      'Black',
+    ];
+
+    // Size filter
+    const sizes = [
+      '2X3',
+      '3X5',
+      '4X6',
+      '5X8',
+      '6X9',
+      '8X10',
+      '9X12',
+      '10X14',
+      '12X15',
+      'Oversized',
+      'Runner',
+      'Round',
+      'Irregular',
+    ];
+
+    // Material filter
+    const materials = [
+      '100% Wool',
+      'Silk',
+      'Botanical Silk',
+      'Wool & Silk',
+      'Wool & Botanical Silk',
+      'Cotton',
+      'Linen',
+      'Jute & Sisal',
+      'PET Yarn',
+      'Polypropylene',
+      'Nylon',
+    ];
+
+    // Construction filter
+    const constructions = ['Hand Knotted', 'Hand Tufted', 'Handwoven'];
+
+    // Collection filter
     const collections = [
-      ...new Set(
-        products.map(
-          (product) => product.collections?.nodes[0]?.title || 'Unknown',
-        ),
-      ),
+      'Bamiyan',
+      'Bidjar',
+      'Prism',
+      'Classic Revivals',
+      'Impressions',
+      'Inked',
+      'Khyber',
+      'Luxor',
     ];
 
-    // Extract characteristics from tags
-    const allCharacteristics = products.flatMap(
-      (product) =>
-        product.tags?.filter((tag: string) => !tag.includes('style:')) || [],
-    );
-    const characteristics = [...new Set(allCharacteristics)];
-
-    // Define price ranges
+    // Price filter
     const prices = [
-      'Under 600000',
-      '600000 - 800000',
-      '800000 - 1000000',
-      'Over 1000000',
+      '0-1,00,000',
+      '1,00,000-3,00,000',
+      '3,00,000-6,00,000',
+      'Above 6,00,000',
     ];
 
     setFilterOptions({
+      styles,
       colors,
       sizes,
       materials,
-      prices,
-      styles,
-      pileHeights: [], // Not available in Shopify product data
+      constructions,
       collections,
-      characteristics,
+      prices,
     });
   }, [products]);
 
@@ -185,78 +220,271 @@ export function RugsSection({
       if (!hasAvailableVariant) return false;
     }
 
-    // Color filter (using vendor as color for now)
-    if (
-      selectedFilters.color.length > 0 &&
-      product.vendor &&
-      !selectedFilters.color.includes(product.vendor)
-    ) {
-      return false;
+    // Style filter - check if product has the selected style in tags, title, or vendor
+    if (selectedFilters.style.length > 0) {
+      // Check in tags with various formats
+      const styleTag = product.tags?.find((tag: string) =>
+        tag.toLowerCase().includes('style:'),
+      );
+      const styleFromTag = styleTag ? styleTag.split(':')[1]?.trim() : '';
+
+      // Check in product title
+      const hasStyleInTitle = selectedFilters.style.some((style) =>
+        product.title.toLowerCase().includes(style.toLowerCase()),
+      );
+
+      // Check in product tags (without specific format)
+      const hasStyleInTags = selectedFilters.style.some((style) =>
+        product.tags?.some((tag: string) =>
+          tag.toLowerCase().includes(style.toLowerCase()),
+        ),
+      );
+
+      // Check in vendor
+      const hasStyleInVendor = selectedFilters.style.includes(
+        product.vendor || '',
+      );
+
+      if (
+        !styleFromTag &&
+        !hasStyleInTitle &&
+        !hasStyleInTags &&
+        !hasStyleInVendor
+      ) {
+        return false;
+      }
     }
 
-    // Size filter (extract from title)
-    const size = product.title?.match(/\d+x\d+/)?.[0] || '';
-    if (
-      selectedFilters.size.length > 0 &&
-      size &&
-      !selectedFilters.size.includes(size)
-    ) {
-      return false;
+    // Color filter - check if product has the selected color in tags, title, or vendor
+    if (selectedFilters.color.length > 0) {
+      // Check in tags with various formats
+      const colorTag = product.tags?.find(
+        (tag: string) =>
+          tag.toLowerCase().includes('color:') ||
+          tag.toLowerCase().includes('colour:'),
+      );
+      const colorFromTag = colorTag ? colorTag.split(':')[1]?.trim() : '';
+
+      // Check in product title
+      const hasColorInTitle = selectedFilters.color.some((color) => {
+        // Handle special color names with slashes
+        const colorVariations = color
+          .toLowerCase()
+          .split('/')
+          .map((c) => c.trim());
+        return colorVariations.some((variation) =>
+          product.title.toLowerCase().includes(variation),
+        );
+      });
+
+      // Check in product tags (without specific format)
+      const hasColorInTags = selectedFilters.color.some((color) => {
+        const colorVariations = color
+          .toLowerCase()
+          .split('/')
+          .map((c) => c.trim());
+        return product.tags?.some((tag: string) =>
+          colorVariations.some((variation) =>
+            tag.toLowerCase().includes(variation),
+          ),
+        );
+      });
+
+      // Check in vendor
+      const hasColorInVendor = selectedFilters.color.includes(
+        product.vendor || '',
+      );
+
+      if (
+        !selectedFilters.color.includes(colorFromTag) &&
+        !hasColorInTitle &&
+        !hasColorInTags &&
+        !hasColorInVendor
+      ) {
+        return false;
+      }
     }
 
-    // Material filter (using productType)
-    if (
-      selectedFilters.material.length > 0 &&
-      product.productType &&
-      !selectedFilters.material.includes(product.productType)
-    ) {
-      return false;
+    // Size filter - check if product has the selected size in variants, title, or tags
+    if (selectedFilters.size.length > 0) {
+      // Check in variants
+      const variantSizes =
+        product.variants?.nodes.map(
+          (variant: ProductVariantFragment) =>
+            variant.title.match(/\d+x\d+/)?.[0] || '',
+        ) || [];
+
+      // Check in product title
+      const titleSize = product.title?.match(/\d+x\d+/)?.[0] || '';
+
+      // Check in tags
+      const sizeTag = product.tags?.find((tag: string) =>
+        tag.toLowerCase().includes('size:'),
+      );
+      const sizeFromTag = sizeTag ? sizeTag.split(':')[1]?.trim() : '';
+
+      // Check for special sizes like "Oversized", "Runner", "Round", "Irregular"
+      const hasSpecialSize = selectedFilters.size.some((size) => {
+        if (['Oversized', 'Runner', 'Round', 'Irregular'].includes(size)) {
+          return (
+            product.title.toLowerCase().includes(size.toLowerCase()) ||
+            product.tags?.some((tag: string) =>
+              tag.toLowerCase().includes(size.toLowerCase()),
+            )
+          );
+        }
+        return false;
+      });
+
+      const allSizes = [...variantSizes, titleSize, sizeFromTag].filter(
+        Boolean,
+      );
+
+      if (
+        !hasSpecialSize &&
+        allSizes.length > 0 &&
+        !selectedFilters.size.some((size) => allSizes.includes(size))
+      ) {
+        return false;
+      }
+    }
+
+    // Material filter - check if product has the selected material in tags, product type, or title
+    if (selectedFilters.material.length > 0) {
+      // Check in tags with various formats
+      const materialTag = product.tags?.find((tag: string) =>
+        tag.toLowerCase().includes('material:'),
+      );
+      const materialFromTag = materialTag
+        ? materialTag.split(':')[1]?.trim()
+        : '';
+
+      // Check in product type
+      const materialFromType = product.productType || '';
+
+      // Check in product title
+      const hasMaterialInTitle = selectedFilters.material.some((mat) => {
+        // Handle special material names with symbols
+        const materialVariations = mat
+          .toLowerCase()
+          .replace(/&/g, 'and')
+          .replace(/%/g, 'percent')
+          .split(/[\s&]+/)
+          .filter(Boolean);
+
+        return materialVariations.some((variation) =>
+          product.title.toLowerCase().includes(variation),
+        );
+      });
+
+      // Check in product tags (without specific format)
+      const hasMaterialInTags = selectedFilters.material.some((mat) => {
+        const materialVariations = mat
+          .toLowerCase()
+          .replace(/&/g, 'and')
+          .replace(/%/g, 'percent')
+          .split(/[\s&]+/)
+          .filter(Boolean);
+
+        return product.tags?.some((tag: string) =>
+          materialVariations.some((variation) =>
+            tag.toLowerCase().includes(variation),
+          ),
+        );
+      });
+
+      if (
+        !selectedFilters.material.includes(materialFromTag) &&
+        !selectedFilters.material.includes(materialFromType) &&
+        !hasMaterialInTitle &&
+        !hasMaterialInTags
+      ) {
+        return false;
+      }
+    }
+
+    // Construction filter - check if product has the selected construction in tags or title
+    if (selectedFilters.construction.length > 0) {
+      // Check in tags with various formats
+      const constructionTag = product.tags?.find((tag: string) =>
+        tag.toLowerCase().includes('construction:'),
+      );
+      const constructionFromTag = constructionTag
+        ? constructionTag.split(':')[1]?.trim()
+        : '';
+
+      // Check in product title
+      const hasConstructionInTitle = selectedFilters.construction.some(
+        (construction) => {
+          const constructionVariations = construction
+            .toLowerCase()
+            .split(/[\s]+/);
+          return constructionVariations.some((variation) =>
+            product.title.toLowerCase().includes(variation),
+          );
+        },
+      );
+
+      // Check in product tags (without specific format)
+      const hasConstructionInTags = selectedFilters.construction.some(
+        (construction) => {
+          const constructionVariations = construction
+            .toLowerCase()
+            .split(/[\s]+/);
+          return product.tags?.some((tag: string) =>
+            constructionVariations.some((variation) =>
+              tag.toLowerCase().includes(variation),
+            ),
+          );
+        },
+      );
+
+      if (
+        !selectedFilters.construction.includes(constructionFromTag) &&
+        !hasConstructionInTitle &&
+        !hasConstructionInTags
+      ) {
+        return false;
+      }
+    }
+
+    // Collection filter - check if product belongs to the selected collection
+    if (selectedFilters.collection.length > 0) {
+      const collection = product.collections?.nodes[0]?.title || '';
+
+      // Also check if collection name is in product title or tags
+      const hasCollectionInTitle = selectedFilters.collection.some((coll) =>
+        product.title.toLowerCase().includes(coll.toLowerCase()),
+      );
+
+      const hasCollectionInTags = selectedFilters.collection.some((coll) =>
+        product.tags?.some((tag: string) =>
+          tag.toLowerCase().includes(coll.toLowerCase()),
+        ),
+      );
+
+      if (
+        !selectedFilters.collection.includes(collection) &&
+        !hasCollectionInTitle &&
+        !hasCollectionInTags
+      ) {
+        return false;
+      }
     }
 
     // Price filter
     if (selectedFilters.price.length > 0) {
       const price = Number(product.priceRange.minVariantPrice.amount);
       const priceMatch = selectedFilters.price.some((range) => {
-        if (range === 'Under 600000') return price < 600000;
-        if (range === '600000 - 800000')
-          return price >= 600000 && price < 800000;
-        if (range === '800000 - 1000000')
-          return price >= 800000 && price < 1000000;
-        if (range === 'Over 1000000') return price >= 1000000;
+        if (range === '0-1,00,000') return price < 100000;
+        if (range === '1,00,000-3,00,000')
+          return price >= 100000 && price < 300000;
+        if (range === '3,00,000-6,00,000')
+          return price >= 300000 && price < 600000;
+        if (range === 'Above 6,00,000') return price >= 600000;
         return false;
       });
       if (!priceMatch) return false;
-    }
-
-    // Style filter (extract from tags)
-    const style =
-      product.tags
-        ?.find((tag: string) => tag.includes('style:'))
-        ?.replace('style:', '') || '';
-    if (
-      selectedFilters.style.length > 0 &&
-      style &&
-      !selectedFilters.style.includes(style)
-    ) {
-      return false;
-    }
-
-    // Collection filter
-    const collection = product.collections?.nodes[0]?.title || '';
-    if (
-      selectedFilters.collection.length > 0 &&
-      collection &&
-      !selectedFilters.collection.includes(collection)
-    ) {
-      return false;
-    }
-
-    // Characteristics filter (using tags)
-    if (selectedFilters.characteristics.length > 0) {
-      const hasCharacteristic = selectedFilters.characteristics.some((char) =>
-        product.tags?.includes(char),
-      );
-      if (!hasCharacteristic) return false;
     }
 
     return true;
@@ -271,27 +499,25 @@ export function RugsSection({
       // If turning off filters, reset all filters and close accordions
       setSelectedFilters({
         availability: false,
+        style: [],
         color: [],
         size: [],
         material: [],
-        price: [],
-        style: [],
-        pileHeight: [],
+        construction: [],
         collection: [],
-        characteristics: [],
+        price: [],
       });
 
       // Close all filter accordions
       setOpenFilters({
         availability: false,
+        style: false,
         color: false,
         size: false,
         material: false,
-        price: false,
-        style: false,
-        pileHeight: false,
+        construction: false,
         collection: false,
-        characteristics: false,
+        price: false,
       });
     }
   };
@@ -361,7 +587,7 @@ export function RugsSection({
   );
 
   return (
-    <div className="rugs-section-container">
+    <div className="rugs-section-component">
       {/* Filter Toggle Button - always visible at the top */}
       <div className="filter-toggle-container">
         <h2 className="filter-toggle-label">Filters</h2>
@@ -382,30 +608,25 @@ export function RugsSection({
         {filtersEnabled && (
           <div className="filters">
             {renderFilterSection('Availability', 'availability', ['In Stock'])}
+            {renderFilterSection('Style', 'style', filterOptions.styles)}
             {renderFilterSection('Color', 'color', filterOptions.colors)}
-            {renderFilterSection('Size', 'size', filterOptions.sizes)}
+            {renderFilterSection('Size (ft)', 'size', filterOptions.sizes)}
             {renderFilterSection(
               'Material',
               'material',
               filterOptions.materials,
             )}
-            {renderFilterSection('Price', 'price', filterOptions.prices)}
-            {renderFilterSection('Style', 'style', filterOptions.styles)}
             {renderFilterSection(
-              'Pile Height',
-              'pileHeight',
-              filterOptions.pileHeights,
+              'Construction',
+              'construction',
+              filterOptions.constructions,
             )}
             {renderFilterSection(
               'Collection',
               'collection',
               filterOptions.collections,
             )}
-            {renderFilterSection(
-              'Characteristics',
-              'characteristics',
-              filterOptions.characteristics,
-            )}
+            {renderFilterSection('Price', 'price', filterOptions.prices)}
           </div>
         )}
 
@@ -438,7 +659,11 @@ export function RugsSection({
                           sizes="(min-width: 45em) 400px, 100vw"
                         />
                       )}
-                      {product.tags?.includes('customisable') && (
+                      {product.tags?.some(
+                        (tag: string) =>
+                          tag.toLowerCase().includes('customisable') ||
+                          tag.toLowerCase().includes('customizable'),
+                      ) && (
                         <div className="customisable-badge">Customisable</div>
                       )}
                     </div>

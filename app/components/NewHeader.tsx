@@ -6,7 +6,7 @@ export function NewHeader() {
   const {open} = useAside();
 
   return (
-    <header className="header">
+    <header className="new-header-component">
       <div className="header-content">
         {/* Logo on the left */}
         <div className="logo-container">

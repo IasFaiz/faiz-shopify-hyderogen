@@ -2,7 +2,7 @@ import {NavLink} from 'react-router';
 
 export function NewFooter() {
   return (
-    <footer className="footer">
+    <footer className="new-footer">
       <div className="footer-content">
         <div className="footer-links">
           {/* Column 1: CONTACT US */}
