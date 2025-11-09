@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {ChevronDown, ChevronUp} from 'lucide-react';
+import {Plus, Minus} from 'lucide-react';
 import {Link} from 'react-router';
 import {Image} from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
@@ -543,14 +543,14 @@ export function RugsSection({
       >
         <h3 className="font-medium text-gray-700">{title}</h3>
         {openFilters[filterName] ? (
-          <ChevronUp size={16} className="text-gray-500" />
+          <Minus size={16} className="text-gray-500" />
         ) : (
-          <ChevronDown size={16} className="text-gray-500" />
+          <Plus size={16} className="text-gray-500" />
         )}
       </div>
 
       {openFilters[filterName] && (
-        <div className="filter-options mt-2 space-y-2">
+        <div className="filter-options">
           {options.map((option) => (
             <div key={option} className="flex items-center">
               <input

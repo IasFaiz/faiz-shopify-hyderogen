@@ -1,5 +1,5 @@
 import {Suspense} from 'react';
-import {Await, NavLink, useAsyncValue} from 'react-router';
+import {Await, NavLink, useAsyncValue, Link} from 'react-router';
 import {
   type CartViewPayload,
   useAnalytics,
@@ -141,11 +141,9 @@ function CartBadge({count}: {count: number | null}) {
   const {publish, shop, cart, prevCart} = useAnalytics();
 
   return (
-    <a
-      href="/cart"
+    <Link
+      to="/cart"
       onClick={(e) => {
-        e.preventDefault();
-        open('cart');
         publish('cart_viewed', {
           cart,
           prevCart,
@@ -155,7 +153,7 @@ function CartBadge({count}: {count: number | null}) {
       }}
     >
       Cart {count === null ? <span>&nbsp;</span> : count}
-    </a>
+    </Link>
   );
 }
 

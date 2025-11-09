@@ -2,34 +2,65 @@ import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import type {CartLayout} from '~/components/CartMain';
 import {CartForm, Money, type OptimisticCart} from '@shopify/hydrogen';
 import {useEffect, useRef} from 'react';
-import {useFetcher} from 'react-router';
+import {useFetcher, Link} from 'react-router';
 import type {FetcherWithComponents} from 'react-router';
 
 type CartSummaryProps = {
   cart: OptimisticCart<CartApiQueryFragment | null>;
   layout: CartLayout;
+  showPrices?: boolean;
 };
 
-export function CartSummary({cart, layout}: CartSummaryProps) {
+export function CartSummary({
+  cart,
+  layout,
+  showPrices = false,
+}: CartSummaryProps) {
   const className =
     layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
 
   return (
     <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
-      <dl className="cart-subtotal">
-        <dt>Subtotal</dt>
-        <dd>
-          {cart?.cost?.subtotalAmount?.amount ? (
-            <Money data={cart?.cost?.subtotalAmount} />
-          ) : (
-            '-'
+      {layout === 'page' ? (
+        <div className="cart-page-summary">
+          <div className="cart-total-row">
+            <dt>Total</dt>
+            <dd>
+              {cart?.cost?.subtotalAmount?.amount ? (
+                <Money data={cart?.cost?.subtotalAmount} />
+              ) : (
+                '-'
+              )}
+            </dd>
+          </div>
+          <div className="cart-checkout-button">
+            <Link to="/checkout" className="checkout-button">
+              Checkout
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <>
+          <h4>Totals</h4>
+          <dl className="cart-subtotal">
+            <dt>Subtotal</dt>
+            <dd>
+              {cart?.cost?.subtotalAmount?.amount ? (
+                <Money data={cart?.cost?.subtotalAmount} />
+              ) : (
+                '-'
+              )}
+            </dd>
+          </dl>
+          {showPrices && (
+            <>
+              <CartDiscounts discountCodes={cart?.discountCodes} />
+              <CartGiftCard giftCardCodes={cart?.appliedGiftCards} />
+            </>
           )}
-        </dd>
-      </dl>
-      <CartDiscounts discountCodes={cart?.discountCodes} />
-      <CartGiftCard giftCardCodes={cart?.appliedGiftCards} />
-      <CartCheckoutActions checkoutUrl={cart?.checkoutUrl} />
+          <CartCheckoutActions checkoutUrl={cart?.checkoutUrl} />
+        </>
+      )}
     </div>
   );
 }

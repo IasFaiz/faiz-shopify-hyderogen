@@ -16,9 +16,11 @@ type CartLine = OptimisticCartLine<CartApiQueryFragment>;
 export function CartLineItem({
   layout,
   line,
+  showPrices = false,
 }: {
   layout: CartLayout;
   line: CartLine;
+  showPrices?: boolean;
 }) {
   const {id, merchandise} = line;
   const {product, title, image, selectedOptions} = merchandise;
@@ -52,7 +54,7 @@ export function CartLineItem({
             <strong>{product.title}</strong>
           </p>
         </Link>
-        <ProductPrice price={line?.cost?.totalAmount} />
+        {showPrices && <ProductPrice price={line?.cost?.totalAmount} />}
         <ul>
           {selectedOptions.map((option) => (
             <li key={option.name}>

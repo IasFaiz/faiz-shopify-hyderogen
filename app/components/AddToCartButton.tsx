@@ -23,6 +23,7 @@ export function AddToCartButton({
             type="hidden"
             value={JSON.stringify(analytics)}
           />
+          <input name="redirectTo" type="hidden" value="/cart" />
           <button
             type="submit"
             onClick={onClick}

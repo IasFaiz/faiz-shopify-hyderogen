@@ -155,8 +155,8 @@ export default function ProductDetails() {
 
   // Handle add to cart
   const handleAddToCart = () => {
-    // Open the cart aside
-    open('cart');
+    // Redirect to cart page
+    void navigate('/cart');
   };
 
   return (
