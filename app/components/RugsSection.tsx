@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Plus, Minus} from 'lucide-react';
+import {Plus, Minus, ArrowUpDown} from 'lucide-react';
 import {Link} from 'react-router';
 import {Image} from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
@@ -29,6 +29,13 @@ interface SelectedFilters {
   price: string[];
 }
 
+type SortOption =
+  | 'default'
+  | 'price-low-high'
+  | 'price-high-low'
+  | 'title-asc'
+  | 'title-desc';
+
 export function RugsSection({
   products,
 }: {
@@ -36,6 +43,9 @@ export function RugsSection({
 }) {
   // State for filters enabled/disabled
   const [filtersEnabled, setFiltersEnabled] = useState<boolean>(false);
+
+  // State for sorting
+  const [sortOption, setSortOption] = useState<SortOption>('default');
 
   // State for filter sections open/close
   const [openFilters, setOpenFilters] = useState<FilterState>({
@@ -490,6 +500,32 @@ export function RugsSection({
     return true;
   });
 
+  // Apply sorting to filtered products
+  const sortedProducts = [...filteredProducts];
+  if (sortOption !== 'default') {
+    sortedProducts.sort((a, b) => {
+      const priceA = Number(a.priceRange.minVariantPrice.amount);
+      const priceB = Number(b.priceRange.minVariantPrice.amount);
+      const titleA = a.title.toLowerCase();
+      const titleB = b.title.toLowerCase();
+      const collectionA = a.collections?.nodes[0]?.title?.toLowerCase() || '';
+      const collectionB = b.collections?.nodes[0]?.title?.toLowerCase() || '';
+
+      switch (sortOption) {
+        case 'price-low-high':
+          return priceA - priceB;
+        case 'price-high-low':
+          return priceB - priceA;
+        case 'title-asc':
+          return titleA.localeCompare(titleB);
+        case 'title-desc':
+          return titleB.localeCompare(titleA);
+        default:
+          return 0;
+      }
+    });
+  }
+
   // Toggle filters on/off
   const toggleFiltersEnabled = () => {
     const newState = !filtersEnabled;
@@ -588,18 +624,38 @@ export function RugsSection({
 
   return (
     <div className="rugs-section-component">
-      {/* Filter Toggle Button - always visible at the top */}
-      <div className="filter-toggle-container">
-        <h2 className="filter-toggle-label">Filters</h2>
-        <div className="filter-toggle">
-          <label className="switch" aria-label="Toggle filters">
-            <input
-              type="checkbox"
-              checked={filtersEnabled}
-              onChange={toggleFiltersEnabled}
-            />
-            <span className="slider round"></span>
-          </label>
+      {/* Filter and Sort Controls */}
+      <div className="filter-sort-container">
+        <div className="filter-header-with-toggle">
+          <h2 className="filter-toggle-label">Filters</h2>
+          <div className="filter-toggle">
+            <label className="switch" aria-label="Toggle filters">
+              <input
+                type="checkbox"
+                checked={filtersEnabled}
+                onChange={toggleFiltersEnabled}
+              />
+              <span className="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        {/* Sort Dropdown */}
+        <div className="sort-container">
+          <div className="sort-dropdown">
+            <select
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value as SortOption)}
+              className="sort-select"
+            >
+              <option value="default">Sort by</option>
+              <option value="price-low-high">Price: Low to High</option>
+              <option value="price-high-low">Price: High to Low</option>
+              <option value="title-asc">Title: A to Z</option>
+              <option value="title-desc">Title: Z to A</option>
+            </select>
+            <ArrowUpDown size={16} className="sort-icon" />
+          </div>
         </div>
       </div>
 
@@ -632,14 +688,14 @@ export function RugsSection({
 
         {/* Right Product Section */}
         <div className="products-container">
-          {filteredProducts.length === 0 ? (
+          {sortedProducts.length === 0 ? (
             <div className="no-products">
               <p className="text-gray-500">
                 No products match your selected filters.
               </p>
             </div>
           ) : (
-            filteredProducts.map((product) => {
+            sortedProducts.map((product) => {
               const image = product.featuredImage;
 
               return (

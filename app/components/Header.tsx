@@ -7,6 +7,7 @@ import {
 } from '@shopify/hydrogen';
 import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
+import {NewHeader, MobileHeaderMenu} from '~/components/NewHeader';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -24,18 +25,52 @@ export function Header({
   publicStoreDomain,
 }: HeaderProps) {
   const {shop, menu} = header;
+  const {open} = useAside();
+
   return (
-    <header className="header-component">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
-      </NavLink>
-      <HeaderMenu
-        menu={menu}
-        viewport="desktop"
-        primaryDomainUrl={header.shop.primaryDomain.url}
-        publicStoreDomain={publicStoreDomain}
-      />
-      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+    <header className="new-header-component">
+      <div className="header-content">
+        {/* Logo on the left */}
+        <div className="logo-container">
+          <NavLink to="/" className="logo">
+            <img src="/logo.png" alt="logo" className="logo-img" />
+          </NavLink>
+        </div>
+
+        {/* Navigation links on the right */}
+        <nav className="nav">
+          <NavLink
+            to="/projects"
+            className={({isActive}) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            ABOUT US
+          </NavLink>
+          <NavLink
+            to="/studio"
+            className={({isActive}) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            COLLECTIONS
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={({isActive}) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            WHY US
+          </NavLink>
+          <NavLink
+            to="/journal"
+            className={({isActive}) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            OUR WORK
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className={({isActive}) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            CRAFTSMANSHIP
+          </NavLink>
+        </nav>
+      </div>
     </header>
   );
 }
