@@ -1,4 +1,27 @@
 // NOTE: https://shopify.dev/docs/api/storefront/latest/queries/cart
+export const CUSTOMER_QUERY = `
+  fragment CustomerFragment on Customer {
+    id
+    firstName
+    lastName
+    email
+    phone
+    createdAt
+    orders(first: 5) {
+      edges {
+        node {
+          id
+          name
+          totalPrice {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const CART_QUERY_FRAGMENT = `#graphql
   fragment Money on MoneyV2 {
     currencyCode
