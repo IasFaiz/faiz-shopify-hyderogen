@@ -5,22 +5,69 @@
   padding: 2rem;
 }
 .rugs-section-component {
-  border: 2px solid red;
-  /* display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 2rem; */
-}
-
-.rugs-section {
   display: flex;
-  gap: 2rem;
-  width: 100%;
+  flex-direction: row;
+  /* border: 2px solid red; */
+  box-sizing: border-box;
+  overflow: hidden;
   position: relative;
-  border: 2px solid rgb(27, 169, 204);
+  left: 0;
 }
 
-.rugs-section.filters-hidden {
+.filters-section {
+  flex: 0 0 20%;
+  width: 20%;
+  max-width: 20%;
+  padding: 1.5rem 1rem 1.5rem 2rem;
+  height: calc(100vh - 6rem);
+  overflow-y: auto;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  transition:
+    opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    max-width 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    margin 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    padding 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  will-change: opacity, transform, max-width, margin, padding;
+}
+
+.content-section {
+  flex: 0 0 80%;
+  width: 80%;
+  max-width: 80%;
+  padding: 2rem 10rem 0 10rem;
+  /* border: 2px solid rgb(56, 177, 31); */
+  /* transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); */
+  box-sizing: border-box;
+  overflow: hidden;
+  will-change: width, max-width, padding, margin;
+}
+
+.content-section.filters-hidden {
+  padding: 0 10rem 0 10rem;
+  flex: 1 1 100%;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 2rem;
+  /* border: 2px solid blue; */
+  box-sizing: border-box;
+}
+
+/* Hide scrollbar but keep functionality */
+.filters-section::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.filters-section {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.content-section.filters-hidden {
   flex-direction: column;
 }
 
@@ -58,7 +105,7 @@
   scrollbar-width: none;
 }
 
-.rugs-section.filters-hidden .filters {
+.filters-section.filters-hidden {
   opacity: 0;
   transform: translateX(-20px);
   max-width: 0;
@@ -175,21 +222,25 @@
 }
 
 .products-container {
-  flex: 1 1 88%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   justify-content: center;
   min-width: 0;
-  transition: all 0.5s ease;
-  border: 2px solid yellow;
+  /* transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); */
+  /* border: 2px solid yellow; */
+  box-sizing: border-box;
+  width: 100%;
+  padding: 4rem;
+  will-change: grid-template-columns;
 }
 
-.rugs-section.filters-hidden .products-container {
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+.content-section.filters-hidden .products-container {
+  grid-template-columns: repeat(3, 1fr);
   max-width: 100%;
+  padding: 10rem 20rem;
   width: 100%;
-  flex: 1 1 100%;
+  gap: 24px; /* Consistent gap regardless of filter visibility */
 }
 
 /* Filter and Sort Controls Container */
@@ -197,12 +248,15 @@
   position: relative; /* Changed from sticky to relative */
   width: 100%;
   margin-bottom: 1.5rem;
-  padding: 0.5rem;
+  padding: 1rem;
   background: transparent;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 2px solid green;
+  /* border: 2px solid green; */
+  box-sizing: border-box;
+  /* transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); */
+  will-change: all;
 }
 
 /* Filter Header with Toggle Button */
@@ -210,13 +264,15 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  min-width: 150px; /* Ensure minimum width for toggle button area */
 }
 
 /* Sort Container */
 .sort-container {
   display: flex;
   align-items: center;
-  border: 2px solid rgb(247, 42, 236);
+  /* border: 2px solid orange; */
+  margin-left: auto; /* Push to the right side */
 }
 
 .sort-dropdown {
@@ -276,20 +332,22 @@
 }
 
 .product-card {
-  width: 280px;
+  width: 260px;
   height: auto;
   box-sizing: border-box;
   padding: 1px;
   text-align: left;
   background: transparent;
-  border: 0px solid red;
+  /* border: 10px solid red; */
   box-shadow: none !important;
-  transition: none;
+  /* transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); */
   display: flex;
   flex-direction: column;
   overflow: hidden;
   justify-self: center;
   border-radius: 0;
+  margin: 2rem 10rem;
+  will-change: transform;
 }
 
 .product-card:hover {
@@ -341,8 +399,24 @@
 
 /* For screens narrower than 768px */
 @media (max-width: 767px) {
-  .rugs-section {
+  .rugs-section-component {
     flex-direction: column;
+    padding: 0;
+  }
+
+  .filters-section {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .content-section {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 1rem;
   }
 
   .filters {
@@ -368,7 +442,7 @@
     border-radius: 8px;
   }
 
-  .rugs-section.filters-hidden .filters {
+  .filters-section.filters-hidden {
     opacity: 0;
     transform: translateY(-20px);
     max-height: 0;
@@ -378,8 +452,9 @@
   }
 
   .products-container {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px; /* Consistent gap */
+    padding: 1rem;
   }
 
   .filter-toggle-container {
@@ -392,14 +467,15 @@
 /* For medium screens between 768px and 1024px */
 @media (min-width: 768px) and (max-width: 1023px) {
   .products-container {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 22px;
   }
 
-  .rugs-section.filters-hidden .products-container {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  .content-section.filters-hidden .products-container {
+    grid-template-columns: repeat(3, 1fr);
     max-width: 100%;
     width: 100%;
+    padding: 10rem;
   }
 
   .filter-toggle-container {
@@ -414,10 +490,11 @@
     gap: 24px;
   }
 
-  .rugs-section.filters-hidden .products-container {
+  .content-section.filters-hidden .products-container {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     max-width: 100%;
     width: 100%;
+    padding: 10rem;
   }
 
   .filter-toggle-container {

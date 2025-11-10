@@ -367,7 +367,9 @@ export default function ProductDetails() {
                 : []
             }
           >
-            {selectedVariant?.availableForSale ? 'Add to Cart' : 'Sold Out'}
+            <div style={{width: '10rem', padding: '0.5rem'}}>
+              {selectedVariant?.availableForSale ? 'Get Quote' : 'Sold Out'}
+            </div>
           </AddToCartButton>
         </div>
       </div>

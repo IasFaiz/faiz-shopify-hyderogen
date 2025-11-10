@@ -623,10 +623,19 @@ export function RugsSection({
   );
 
   return (
-    <div className="rugs-section-component">
-      {/* Filter and Sort Controls */}
-      <div className="filter-sort-container">
-        {!filtersEnabled && (
+    <div
+      className="rugs-section-component"
+      style={{
+        width: '100vw',
+        marginLeft: 'calc(-50vw + 50%)',
+        marginRight: 'calc(-50vw + 50%)',
+        boxSizing: 'border-box',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Left Filter Section - only visible when filters are enabled */}
+      {filtersEnabled && (
+        <div className="filters-section">
           <div className="filter-header-with-toggle">
             <h2 className="filter-toggle-label">Filters</h2>
             <div className="filter-toggle">
@@ -640,15 +649,32 @@ export function RugsSection({
               </label>
             </div>
           </div>
-        )}
+          {renderFilterSection('Availability', 'availability', ['In Stock'])}
+          {renderFilterSection('Style', 'style', filterOptions.styles)}
+          {renderFilterSection('Color', 'color', filterOptions.colors)}
+          {renderFilterSection('Size (ft)', 'size', filterOptions.sizes)}
+          {renderFilterSection('Material', 'material', filterOptions.materials)}
+          {renderFilterSection(
+            'Construction',
+            'construction',
+            filterOptions.constructions,
+          )}
+          {renderFilterSection(
+            'Collection',
+            'collection',
+            filterOptions.collections,
+          )}
+          {renderFilterSection('Price', 'price', filterOptions.prices)}
+        </div>
+      )}
 
-        {/* Sort Dropdown */}
-      </div>
-
-      <div className={`rugs-section ${filtersEnabled ? '' : 'filters-hidden'}`}>
-        {/* Left Filter Section - only visible when filters are enabled */}
-        {filtersEnabled && (
-          <div className="filters">
+      {/* Right Content Section */}
+      <div
+        className={`content-section ${filtersEnabled ? '' : 'filters-hidden'}`}
+      >
+        {/* Filter and Sort Controls */}
+        <div className="filter-sort-container">
+          {!filtersEnabled && (
             <div className="filter-header-with-toggle">
               <h2 className="filter-toggle-label">Filters</h2>
               <div className="filter-toggle">
@@ -662,31 +688,13 @@ export function RugsSection({
                 </label>
               </div>
             </div>
-            {renderFilterSection('Availability', 'availability', ['In Stock'])}
-            {renderFilterSection('Style', 'style', filterOptions.styles)}
-            {renderFilterSection('Color', 'color', filterOptions.colors)}
-            {renderFilterSection('Size (ft)', 'size', filterOptions.sizes)}
-            {renderFilterSection(
-              'Material',
-              'material',
-              filterOptions.materials,
-            )}
-            {renderFilterSection(
-              'Construction',
-              'construction',
-              filterOptions.constructions,
-            )}
-            {renderFilterSection(
-              'Collection',
-              'collection',
-              filterOptions.collections,
-            )}
-            {renderFilterSection('Price', 'price', filterOptions.prices)}
+          )}
+        </div>
+        <div className="filter-sort-container">
+          <div style={{fontSize: '2rem', fontWeight: 300, color: '#272727ff'}}>
+            RUGS
           </div>
-        )}
-
-        {/* Right Product Section */}
-        <div>
+          {/* Sort Dropdown */}
           <div className="sort-container">
             <div className="sort-dropdown">
               <select
@@ -703,58 +711,60 @@ export function RugsSection({
               <ArrowUpDown size={16} className="sort-icon" />
             </div>
           </div>
-          <div className="products-container">
-            {sortedProducts.length === 0 ? (
-              <div className="no-products">
-                <p className="text-gray-500">
-                  No products match your selected filters.
-                </p>
-              </div>
-            ) : (
-              sortedProducts.map((product) => {
-                const image = product.featuredImage;
+        </div>
 
-                return (
-                  <Link
-                    key={product.id}
-                    to={`/products/${product.handle}`}
-                    className="product-card-link"
-                    prefetch="intent"
-                  >
-                    <div className="product-card">
-                      <div className="product-image-container">
-                        {image && (
-                          <Image
-                            alt={image.altText || product.title}
-                            aspectRatio="1/1"
-                            data={image}
-                            sizes="(min-width: 45em) 400px, 100vw"
-                          />
-                        )}
-                        {product.tags?.some(
-                          (tag: string) =>
-                            tag.toLowerCase().includes('customisable') ||
-                            tag.toLowerCase().includes('customizable'),
-                        ) && (
-                          <div className="customisable-badge">Customisable</div>
-                        )}
-                      </div>
-                      <div className="product-name">{product.title}</div>
-                      <div className="product-price">
-                        {new Intl.NumberFormat('en-IN', {
-                          style: 'currency',
-                          currency:
-                            product.priceRange.minVariantPrice.currencyCode,
-                        }).format(
-                          Number(product.priceRange.minVariantPrice.amount),
-                        )}
-                      </div>
+        {/* Products Section */}
+        <div className="products-container">
+          {sortedProducts.length === 0 ? (
+            <div className="no-products">
+              <p className="text-gray-500">
+                No products match your selected filters.
+              </p>
+            </div>
+          ) : (
+            sortedProducts.map((product) => {
+              const image = product.featuredImage;
+
+              return (
+                <Link
+                  key={product.id}
+                  to={`/products/${product.handle}`}
+                  className="product-card-link"
+                  prefetch="intent"
+                >
+                  <div className="product-card">
+                    <div className="product-image-container">
+                      {image && (
+                        <Image
+                          alt={image.altText || product.title}
+                          aspectRatio="1/1"
+                          data={image}
+                          sizes="(min-width: 45em) 400px, 100vw"
+                        />
+                      )}
+                      {product.tags?.some(
+                        (tag: string) =>
+                          tag.toLowerCase().includes('customisable') ||
+                          tag.toLowerCase().includes('customizable'),
+                      ) && (
+                        <div className="customisable-badge">Customisable</div>
+                      )}
                     </div>
-                  </Link>
-                );
-              })
-            )}
-          </div>{' '}
+                    <div className="product-name">{product.title}</div>
+                    <div className="product-price">
+                      {/* {new Intl.NumberFormat('en-IN', {
+                        style: 'currency',
+                        currency:
+                          product.priceRange.minVariantPrice.currencyCode,
+                      }).format(
+                        Number(product.priceRange.minVariantPrice.amount),
+                      )} */}
+                    </div>
+                  </div>
+                </Link>
+              );
+            })
+          )}
         </div>
       </div>
     </div>
