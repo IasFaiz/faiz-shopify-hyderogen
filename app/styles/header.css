@@ -2,11 +2,12 @@
 
 /* CSS Variables for Header */
 :root {
-  --header-height: 120px; /* Increased height for two-row layout */
+  --header-height: 105px; /* Increased height for two-row layout */
   --color-header: #fff6e8; /* Light, slightly warm background */
+  --color-grey: #777777; /* Softer gray for text */
   --font-weight-light: 300;
   --font-weight-medium: 500;
-  --letter-spacing-wide: 3px;
+  --letter-spacing-wide: 4px;
   --letter-spacing-narrow: 1px;
   --color-text: #555555; /* Muted dark gray instead of pure black */
   --color-text-hover: #333333; /* Darker gray for hover state */
@@ -27,7 +28,8 @@
   padding: 0 1rem;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 1000;
+  border: 2px solid red;
 }
 
 .header-component .header-menu-mobile-toggle {
@@ -80,6 +82,7 @@
   width: 100%;
   z-index: 1000;
   padding: var(--header-padding) 0;
+  border: 2px solid red;
 }
 
 .new-header .header-content {
@@ -217,7 +220,7 @@
   height: var(--header-height);
   position: sticky;
   top: 0;
-  padding: 1.5rem 0rem;
+  padding: 1.3rem 0rem;
   z-index: 1000;
 }
 
@@ -273,12 +276,12 @@
 @media (min-width: 768px) {
   .new-header-component .nav {
     display: flex;
-    gap: 5rem;
+    gap: 3.7rem;
   }
 
   .new-header-component .nav-item {
     color: var(--color-grey);
-    font-size: 0.85vw;
+    font-size: 0.9vw;
     font-weight: var(--font-weight-medium);
     letter-spacing: var(--letter-spacing-wide);
     text-transform: uppercase;

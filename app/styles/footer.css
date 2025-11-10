@@ -5,26 +5,30 @@
   --footer-bg-color: #04204f; /* Dark blue background */
   --footer-text-color: #ffffff; /* White text color */
   --footer-heading-color: #d4af37; /* Gold/yellow color for headings */
-  --footer-border-color: rgba(
-    255,
-    255,
-    255,
-    0.2
+  --footer-border-color: rgb(
+    230,
+    230,
+    230
   ); /* Semi-transparent white for borders */
   --footer-copyright-color: rgba(
     255,
     255,
     255,
-    0.7
+    0.856
   ); /* Slightly transparent white text */
 }
 
 /* Footer Container */
 .new-footer {
   background: var(--footer-bg-color) !important;
-  padding: 4rem 0 2rem;
+  /* border: 2px solid red; */
+  height: 58vh;
+  box-sizing: border-box;
+  letter-spacing: 3px;
+  padding: 4rem 8rem 4rem;
+  color: var(--footer-text-color);
   font-family:
-    'Inter',
+    'Brandon Grotesque',
     -apple-system,
     BlinkMacSystemFont,
     'Segoe UI',
@@ -39,18 +43,57 @@
   padding: 0 3rem;
 }
 
-/* Footer Links Grid */
+/* container */
 .footer-links {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 2rem;
+  grid-template-columns: 2fr 2fr 2fr 3fr; /* 6/9 (2/3) vs 3/9 (1/3) */
+  gap: 3rem;
   margin-bottom: 3rem;
   width: 100%;
+  align-items: start; /* align columns to top */
+  column-gap: 3rem;
+  row-gap: 1.25rem;
+  /* border: 2px solid red; */
 }
 
-@media (min-width: 768px) {
+/* ensure each column can shrink (prevents overflow that breaks grid) */
+.footer-links > .footer-column {
+  min-width: 0; /* required so flex/grid children can shrink */
+  overflow: visible;
+}
+
+/* make logo responsive (remove forced 300x100 inline sizing effect) */
+.footer-column .footer-logo-img,
+.footer-logo-img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  max-height: 140px; /* tweak as needed */
+}
+
+/* center logo column contents if you want */
+.footer-links > .footer-column:last-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* or center */
+  align-items: center;
+}
+
+/* Responsive: stack on smaller screens */
+@media (max-width: 900px) {
   .footer-links {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr 1fr; /* 2 columns on tablet */
+  }
+  .footer-links > .footer-column:last-child {
+    order: 3; /* optional: control order */
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-links {
+    grid-template-columns: 1fr; /* single column on mobile */
   }
 }
 
@@ -60,8 +103,9 @@
 }
 
 .footer-column.with-divider {
-  border-right: 1px solid var(--footer-border-color);
+  border-left: 2px solid var(--footer-border-color);
   padding-right: 2rem;
+  padding-left: 3rem;
 }
 
 /* Footer Headings */
@@ -118,6 +162,7 @@
 
 .footer-link:hover {
   opacity: 0.8; /* Subtle hover state */
+  text-decoration: none !important; /* Remove underline */
 }
 
 /* Footer Social */
@@ -135,6 +180,7 @@
 
 .footer-social-link:hover {
   opacity: 0.8; /* Subtle hover state */
+  text-decoration: none !important; /* Remove underline */
 }
 
 /* Footer Logo Section */
@@ -155,6 +201,20 @@
   margin-bottom: 2rem;
 }
 
+/* Footer Logo Image */
+.footer-logo-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  filter: brightness(0) invert(1); /* This will make the logo white */
+}
+.footer-logo-img-container {
+  width: 100%; /* Adjust as needed */
+  margin-bottom: 1rem;
+  align-items: start;
+  /* border: 2px solid red; */
+}
+
 /* Footer Legal Links */
 .footer-legal-links {
   margin-bottom: 2rem;
@@ -164,7 +224,7 @@
 .footer-copyright {
   color: var(--footer-copyright-color);
   font-size: 0.875rem;
-  margin-top: 2rem;
+  margin-top: 10rem;
 }
 
 /* Utility Classes */

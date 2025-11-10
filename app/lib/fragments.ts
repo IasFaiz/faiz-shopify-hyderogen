@@ -23,7 +23,7 @@ export const CUSTOMER_QUERY = `
 `;
 
 export const CART_QUERY_FRAGMENT = `#graphql
-  fragment Money on MoneyV2 {
+  fragment Money on MoneyV2 {n
     currencyCode
     amount
   }

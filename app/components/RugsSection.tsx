@@ -626,43 +626,42 @@ export function RugsSection({
     <div className="rugs-section-component">
       {/* Filter and Sort Controls */}
       <div className="filter-sort-container">
-        <div className="filter-header-with-toggle">
-          <h2 className="filter-toggle-label">Filters</h2>
-          <div className="filter-toggle">
-            <label className="switch" aria-label="Toggle filters">
-              <input
-                type="checkbox"
-                checked={filtersEnabled}
-                onChange={toggleFiltersEnabled}
-              />
-              <span className="slider round"></span>
-            </label>
+        {!filtersEnabled && (
+          <div className="filter-header-with-toggle">
+            <h2 className="filter-toggle-label">Filters</h2>
+            <div className="filter-toggle">
+              <label className="switch" aria-label="Toggle filters">
+                <input
+                  type="checkbox"
+                  checked={filtersEnabled}
+                  onChange={toggleFiltersEnabled}
+                />
+                <span className="slider round"></span>
+              </label>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Sort Dropdown */}
-        <div className="sort-container">
-          <div className="sort-dropdown">
-            <select
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value as SortOption)}
-              className="sort-select"
-            >
-              <option value="default">Sort by</option>
-              <option value="price-low-high">Price: Low to High</option>
-              <option value="price-high-low">Price: High to Low</option>
-              <option value="title-asc">Title: A to Z</option>
-              <option value="title-desc">Title: Z to A</option>
-            </select>
-            <ArrowUpDown size={16} className="sort-icon" />
-          </div>
-        </div>
       </div>
 
       <div className={`rugs-section ${filtersEnabled ? '' : 'filters-hidden'}`}>
         {/* Left Filter Section - only visible when filters are enabled */}
         {filtersEnabled && (
           <div className="filters">
+            <div className="filter-header-with-toggle">
+              <h2 className="filter-toggle-label">Filters</h2>
+              <div className="filter-toggle">
+                <label className="switch" aria-label="Toggle filters">
+                  <input
+                    type="checkbox"
+                    checked={filtersEnabled}
+                    onChange={toggleFiltersEnabled}
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </div>
+            </div>
             {renderFilterSection('Availability', 'availability', ['In Stock'])}
             {renderFilterSection('Style', 'style', filterOptions.styles)}
             {renderFilterSection('Color', 'color', filterOptions.colors)}
@@ -687,57 +686,75 @@ export function RugsSection({
         )}
 
         {/* Right Product Section */}
-        <div className="products-container">
-          {sortedProducts.length === 0 ? (
-            <div className="no-products">
-              <p className="text-gray-500">
-                No products match your selected filters.
-              </p>
+        <div>
+          <div className="sort-container">
+            <div className="sort-dropdown">
+              <select
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value as SortOption)}
+                className="sort-select"
+              >
+                <option value="default">Sort by</option>
+                <option value="price-low-high">Price: Low to High</option>
+                <option value="price-high-low">Price: High to Low</option>
+                <option value="title-asc">Title: A to Z</option>
+                <option value="title-desc">Title: Z to A</option>
+              </select>
+              <ArrowUpDown size={16} className="sort-icon" />
             </div>
-          ) : (
-            sortedProducts.map((product) => {
-              const image = product.featuredImage;
+          </div>
+          <div className="products-container">
+            {sortedProducts.length === 0 ? (
+              <div className="no-products">
+                <p className="text-gray-500">
+                  No products match your selected filters.
+                </p>
+              </div>
+            ) : (
+              sortedProducts.map((product) => {
+                const image = product.featuredImage;
 
-              return (
-                <Link
-                  key={product.id}
-                  to={`/products/${product.handle}`}
-                  className="product-card-link"
-                  prefetch="intent"
-                >
-                  <div className="product-card">
-                    <div className="product-image-container">
-                      {image && (
-                        <Image
-                          alt={image.altText || product.title}
-                          aspectRatio="1/1"
-                          data={image}
-                          sizes="(min-width: 45em) 400px, 100vw"
-                        />
-                      )}
-                      {product.tags?.some(
-                        (tag: string) =>
-                          tag.toLowerCase().includes('customisable') ||
-                          tag.toLowerCase().includes('customizable'),
-                      ) && (
-                        <div className="customisable-badge">Customisable</div>
-                      )}
+                return (
+                  <Link
+                    key={product.id}
+                    to={`/products/${product.handle}`}
+                    className="product-card-link"
+                    prefetch="intent"
+                  >
+                    <div className="product-card">
+                      <div className="product-image-container">
+                        {image && (
+                          <Image
+                            alt={image.altText || product.title}
+                            aspectRatio="1/1"
+                            data={image}
+                            sizes="(min-width: 45em) 400px, 100vw"
+                          />
+                        )}
+                        {product.tags?.some(
+                          (tag: string) =>
+                            tag.toLowerCase().includes('customisable') ||
+                            tag.toLowerCase().includes('customizable'),
+                        ) && (
+                          <div className="customisable-badge">Customisable</div>
+                        )}
+                      </div>
+                      <div className="product-name">{product.title}</div>
+                      <div className="product-price">
+                        {new Intl.NumberFormat('en-IN', {
+                          style: 'currency',
+                          currency:
+                            product.priceRange.minVariantPrice.currencyCode,
+                        }).format(
+                          Number(product.priceRange.minVariantPrice.amount),
+                        )}
+                      </div>
                     </div>
-                    <div className="product-name">{product.title}</div>
-                    <div className="product-price">
-                      {new Intl.NumberFormat('en-IN', {
-                        style: 'currency',
-                        currency:
-                          product.priceRange.minVariantPrice.currencyCode,
-                      }).format(
-                        Number(product.priceRange.minVariantPrice.amount),
-                      )}
-                    </div>
-                  </div>
-                </Link>
-              );
-            })
-          )}
+                  </Link>
+                );
+              })
+            )}
+          </div>{' '}
         </div>
       </div>
     </div>
