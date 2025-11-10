@@ -21,8 +21,8 @@ export function HomeBanner() {
         alignItems: 'center',
       }}
     >
-      <div style={{flex: 1}}>Hi</div>
-      <div style={{flex: 1}}>Hi</div>
+      <div style={{flex: 1}}></div>
+      <div style={{flex: 1}}></div>
       <div
         style={{
           flex: 2,
