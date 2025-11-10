@@ -9,7 +9,7 @@
   flex-direction: row;
   /* border: 2px solid red; */
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   left: 0;
 }
@@ -19,10 +19,12 @@
   width: 20%;
   max-width: 20%;
   padding: 1.5rem 1rem 1.5rem 2rem;
-  height: calc(100vh - 6rem);
-  overflow-y: auto;
+  height: auto;
+  overflow: visible;
   background-color: #f7f7f7;
   border-radius: 8px;
+  position: sticky;
+  top: 105px; /* Position below header using CSS variable */
   transition:
     opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
@@ -31,6 +33,7 @@
     padding 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
   will-change: opacity, transform, max-width, margin, padding;
+  z-index: 100; /* Ensure it stays above content */
 }
 
 .content-section {
@@ -41,7 +44,7 @@
   /* border: 2px solid rgb(56, 177, 31); */
   /* transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); */
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
   will-change: width, max-width, padding, margin;
 }
 
@@ -233,6 +236,7 @@
   width: 100%;
   padding: 4rem;
   will-change: grid-template-columns;
+  margin-top: 0; /* Ensure no extra space above products */
 }
 
 .content-section.filters-hidden .products-container {
@@ -257,6 +261,7 @@
   box-sizing: border-box;
   /* transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); */
   will-change: all;
+  z-index: 50; /* Ensure it appears above content but below filters */
 }
 
 /* Filter Header with Toggle Button */
@@ -417,6 +422,7 @@
     width: 100%;
     max-width: 100%;
     padding: 0 1rem;
+    overflow: visible;
   }
 
   .filters {
@@ -427,6 +433,7 @@
     border-bottom: none;
     padding: 1.5rem;
     height: auto;
+    max-height: none;
     position: static;
     top: auto;
     transition:
@@ -436,7 +443,7 @@
       margin 0.5s ease;
     opacity: 1;
     transform: translateY(0);
-    max-height: 1000px;
+    max-height: none;
     margin: 0;
     background-color: #f7f7f7;
     border-radius: 8px;
@@ -455,6 +462,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 24px; /* Consistent gap */
     padding: 1rem;
+    margin-top: 0; /* Ensure no extra space above products */
   }
 
   .filter-toggle-container {
@@ -476,6 +484,7 @@
     max-width: 100%;
     width: 100%;
     padding: 10rem;
+    margin-top: 0; /* Ensure no extra space above products */
   }
 
   .filter-toggle-container {
@@ -495,6 +504,7 @@
     max-width: 100%;
     width: 100%;
     padding: 10rem;
+    margin-top: 0; /* Ensure no extra space above products */
   }
 
   .filter-toggle-container {

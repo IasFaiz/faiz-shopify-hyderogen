@@ -137,8 +137,10 @@ function loadDeferredData({context}: Route.LoaderArgs) {
       console.error(error);
       return null;
     });
+  // Load cart data immediately to ensure it's up-to-date
+  const cartData = cart.get();
   return {
-    cart: cart.get(),
+    cart: cartData,
     isLoggedIn: customerAccount.isLoggedIn(),
     footer,
   };

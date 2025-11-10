@@ -24,14 +24,14 @@ export function CartSummary({
       {layout === 'page' ? (
         <div className="cart-page-summary">
           <div className="cart-total-row">
-            <dt>Total</dt>
-            <dd>
+            {/* <dt>Total</dt> */}
+            {/* <dd>
               {cart?.cost?.subtotalAmount?.amount ? (
                 <Money data={cart?.cost?.subtotalAmount} />
               ) : (
                 '-'
               )}
-            </dd>
+            </dd> */}
           </div>
           <div className="cart-checkout-button">
             <Link to="/checkout" className="checkout-button">

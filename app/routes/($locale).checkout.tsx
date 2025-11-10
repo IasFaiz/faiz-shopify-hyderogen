@@ -109,30 +109,6 @@ export default function Checkout() {
 
       <div className="checkout-content">
         {/* Left Section - Order Summary */}
-        <div className="checkout-order-summary">
-          <h2>Order Summary</h2>
-          <div className="checkout-cart-items">
-            <CartMain layout="page" cart={cart} showPrices={true} />
-          </div>
-          <div className="checkout-totals">
-            <div className="checkout-total-row">
-              <span>Subtotal</span>
-              <span>
-                {(cart as CartApiQueryFragment)?.cost?.subtotalAmount?.amount
-                  ? `${(cart as CartApiQueryFragment).cost.subtotalAmount.currencyCode} ${(cart as CartApiQueryFragment).cost.subtotalAmount.amount}`
-                  : '-'}
-              </span>
-            </div>
-            <div className="checkout-total-row checkout-grand-total">
-              <span>Total</span>
-              <span>
-                {(cart as CartApiQueryFragment)?.cost?.subtotalAmount?.amount
-                  ? `${(cart as CartApiQueryFragment).cost.subtotalAmount.currencyCode} ${(cart as CartApiQueryFragment).cost.subtotalAmount.amount}`
-                  : '-'}
-              </span>
-            </div>
-          </div>
-        </div>
 
         {/* Right Section - Contact Form */}
         <div className="checkout-form-container">
@@ -227,6 +203,12 @@ export default function Checkout() {
               Submit
             </button>
           </Form>
+        </div>
+        <div className="checkout-order-summary">
+          <h2>Order Summary</h2>
+          <div className="checkout-cart-items">
+            <CartMain layout="page" cart={cart} showPrices={true} />
+          </div>
         </div>
       </div>
     </div>

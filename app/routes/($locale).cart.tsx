@@ -103,6 +103,7 @@ export async function action({request, context}: Route.ActionArgs) {
 
 export async function loader({context}: Route.LoaderArgs) {
   const {cart} = context;
+  // Force a fresh cart fetch to ensure we have the latest data
   return await cart.get();
 }
 
